@@ -1,0 +1,37 @@
+{% extends 'review/_base.html' %} {% block main_content %}
+
+<div class="container p-5 bg-light">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <h1>Bienvenue sur LITReview</h1>
+      <p>Vous cherchez une critique littéraire ? demandez-la !</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="my-5 py-5 d-flex flex-row justify-content-around">
+      <div class="col-5 py-5 bg-light text-center">
+        <h2>Inscrivez-vous maintenant</h2>
+        <button type="button" class="btn btn-warning">
+          <a
+            style="text-decoration: none; color: inherit"
+            href="{% url 'review:inscription' %}"
+            >Inscription</a
+          >
+        </button>
+      </div>
+      <div class="col-5 p-3 bg-light text-center">
+        <h2>Déjà membre ? <br />Alors Connectez-vous !</h2>
+        <p class="{{color}}">{{ message }}</p>
+        <form method="post">
+          {{ form.as_p }} {% csrf_token %}
+          <button type="submit" class="btn btn-warning">Se connecter</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock main_content %}

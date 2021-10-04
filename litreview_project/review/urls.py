@@ -18,5 +18,8 @@ from . import views
 
 app_name = 'review'
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.connexion, name='connexion'),
+    path('home', views.home, name='home'),
+    path("inscription", views.inscription, name="inscription"),
+    path('deconnexion', views.deconnexion, name="deconnexion"),
 ]
