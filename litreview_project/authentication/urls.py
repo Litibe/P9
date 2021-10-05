@@ -16,7 +16,9 @@ Including another URLconf
 from django.urls import path
 from . import views
 
-app_name = 'review'
+app_name = 'authentication'
 urlpatterns = [
-    path('home', views.home, name='home'),
+    path('', views.connexion, name='connexion'),
+    path("inscription", views.inscription, name="inscription"),
+    path('deconnexion', views.deconnexion, name="deconnexion"),
 ]

@@ -1,0 +1,15 @@
+.htmx-settling img {
+    opacity: 20;
+  }
+  img {
+   transition: opacity 900ms ease-in;
+  }
+
+
+#review_home{
+  background-image: url("../../../review/static/review/img/typewriter-801921_1920.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+  

@@ -1,6 +1,16 @@
-{% extends 'review/_base.html' %} {% block main_content %}
+{% extends 'litreview_project/_base.html' %} {% load static %}
+<!-- Page Home-->
 
-<div class="container p-5 bg-light">
+{% block main_content %}
+<style>
+  body {
+    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+<div class="container col-12 col-md-9 col-lg-6 p-2 bg-light">
   <div class="row">
     <div class="jumbotron text-center">
       <h1>LITReview - Espace Membres</h1>

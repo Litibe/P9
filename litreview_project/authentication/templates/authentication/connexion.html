@@ -1,6 +1,6 @@
-{% extends 'review/_base.html' %} {% block main_content %}
+{% extends 'litreview_project/_base.html' %} {% block main_content %}
 
-<div class="container p-5 bg-light">
+<div class="container col-12 col-md-9 col-lg-6 text-light">
   <div class="row">
     <div class="jumbotron text-center">
       <h1>Bienvenue sur LITReview</h1>
@@ -9,20 +9,31 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container my-4">
   <div class="row">
-    <div class="my-5 py-5 d-flex flex-row justify-content-around">
-      <div class="col-5 py-5 bg-light text-center">
+    <div class="d-flex flex-row justify-content-around align-content-center">
+      <div
+        class="
+          col-11 col-md-5
+          p-5
+          bg-light
+          text-center
+          d-flex
+          flex-column
+          justify-content-around
+          align-content-center
+        "
+      >
         <h2>Inscrivez-vous maintenant</h2>
-        <button type="button" class="btn btn-warning">
+        <button type="button" class="btn btn-warning m-auto">
           <a
             style="text-decoration: none; color: inherit"
-            href="{% url 'review:inscription' %}"
+            href="{% url 'authentication:inscription' %}"
             >Inscription</a
           >
         </button>
       </div>
-      <div class="col-5 p-3 bg-light text-center">
+      <div class="col-11 col-md-5 p-3 bg-light text-center">
         <h2>Déjà membre ? <br />Alors Connectez-vous !</h2>
         <p class="{{color}}">{{ message }}</p>
         <form method="post">

@@ -1,6 +1,0 @@
-.htmx-settling img {
-    opacity: 20;
-  }
-  img {
-   transition: opacity 900ms ease-in;
-  }

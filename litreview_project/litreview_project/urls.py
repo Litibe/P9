@@ -18,4 +18,5 @@ from django.urls import include, path
 
 urlpatterns = [
     path('', include("review.urls", namespace='review')),
+    path('', include("authentication.urls", namespace='authentication')),
 ]
