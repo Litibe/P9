@@ -5,7 +5,14 @@
   id="divNavBar"
   class="bg-light mb-4 sticky-top shadow d-flex justify-content-center"
 >
-  <nav class="col navbar navbar-expand-md navbar-light">
+  <nav
+    class="
+      col
+      navbar navbar-expand-md navbar-light
+      d-flex
+      justify-content-center
+    "
+  >
     <div class="col-4 text-center">
       <img
         class="navbar-brand pl-3"
@@ -16,6 +23,7 @@
         title="Le logo de Logo de LITReview"
       />
     </div>
+    {% if user.is_authenticated %}
     <button
       class="navbar-toggler"
       type="button"
@@ -33,24 +41,23 @@
       class="col-10 mx-5 collapse navbar-collapse text-center"
     >
       <ul class="col-10 navbar-nav mx-3 d-flex justify-content-center">
-        {%  if user.is_authenticated %}
         <li class="nav-item m-1 shadow">
-          <a class="nav-link" href="#"> Flux </a>
+          <a class="nav-link" href="{% url 'review:flux' %}"> Flux </a>
         </li>
         <li class="nav-item m-1 shadow">
-          <a class="nav-link" href="#"> Posts </a>
+          <a class="nav-link" href="{% url 'review:posts' %}"> Posts </a>
         </li>
         <li class="nav-item m-1 shadow">
-          <a class="nav-link" href="#"> Abonnements </a>
+          <a class="nav-link disabled" href="#"> Abonnements </a>
         </li>
         <li class="nav-item m-1 shadow">
           <a class="nav-link" href="{% url 'authentication:deconnexion' %}">
             Se déconnecter
           </a>
         </li>
-        {% endif %}
       </ul>
     </div>
+    {% endif %}
   </nav>
 </div>
 

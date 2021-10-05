@@ -1,0 +1,44 @@
+{% extends 'litreview_project/_base.html' %} {% load static %}
+<!-- Page Home-->
+
+{% block main_content %}
+<style>
+  body {
+    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+<div class="container col-12 col-md-9 col-lg-6 p-2 bg-light">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <h1>LITReview - Espace Membres</h1>
+      <p>Bonjour, {{user.username}} !</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row p-2 bg-light m-4 d-flex justify-content-around">
+    <h2 class="text-center p-5">Merci de faire votre choix :</h2>
+    <div class="col-4 p-5 justify-content-center">
+      <a
+        style="text-decoration: none; color: inherit"
+        href="{% url 'review:create_new_ticket' %}"
+        class="btn btn-warning m-auto"
+        >Demander une critique</a
+      >
+    </div>
+    <div class="col-4 p-5 d-flex justify-content-center">
+      <a
+        style="text-decoration: none; color: inherit"
+        href="{% url 'review:create_new_review' %}"
+        class="btn btn-warning m-auto"
+        >Créer une critique</a
+      >
+    </div>
+  </div>
+</div>
+
+{% endblock main_content %}

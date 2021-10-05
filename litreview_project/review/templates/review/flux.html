@@ -1,0 +1,39 @@
+{% extends 'litreview_project/_base.html' %} {% load static %}
+<!-- Page Home-->
+
+{% block main_content %}
+<style>
+  body {
+    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+<div class="container col-12 col-md-9 col-lg-6 m-auto p-2 bg-light">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <h1>LITReview - Flux des demandes</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    {% for ticket in tickets %}
+
+    <div class="m-3 p-2 bg-light">
+      <h3>Demande #{{ ticket.id }} : {{ ticket.title }}</h3>
+      <img src="{{ ticket.image.url }}" width="100px" />
+      <p class="text-primary">Description de la demande :</p>
+      <p>{{ ticket.description }}</p>
+      <div class="text-end">
+        <button class="btn btn-warning" type="submit">
+          Créer une critique
+        </button>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock main_content %}

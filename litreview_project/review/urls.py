@@ -14,9 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 app_name = 'review'
 urlpatterns = [
     path('home', views.home, name='home'),
+    path('create_new_review', views.create_new_review, name='create_new_review'),
+    path('create_new_ticket', views.create_new_ticket, name='create_new_ticket'),
+    path('flux', views.flux, name='flux'),
+    path('posts', views.posts, name='posts'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)
