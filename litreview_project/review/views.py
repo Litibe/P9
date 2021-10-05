@@ -5,6 +5,7 @@ from django.conf import settings
 
 from . import forms
 from . import models
+from django.contrib.auth.models import User
 
 
 @login_required
@@ -34,7 +35,6 @@ def home(request):
 @login_required
 def flux(request):
     tickets = models.Ticket.objects.all()
-
     return render(request, 'review/flux.html', context={"tickets": tickets})
 
 

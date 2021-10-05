@@ -22,10 +22,14 @@
   <div class="row">
     {% for ticket in tickets %}
 
-    <div class="m-3 p-2 bg-light">
-      <h3>Demande #{{ ticket.id }} : {{ ticket.title }}</h3>
+    <div class="m-3 p-5 bg-light">
+      <div>
+        <p>{{ticket.user}} a demandé une critique</p>
+        <h3>Demande #{{ ticket.id }} : {{ ticket.title }}</h3>
+        <p class="text-end">{{ticket.time_created}}</p>
+      </div>
       <img src="{{ ticket.image.url }}" width="100px" />
-      <p class="text-primary">Description de la demande :</p>
+      <p class="text-primary m-3">Description de la demande :</p>
       <p>{{ ticket.description }}</p>
       <div class="text-end">
         <button class="btn btn-warning" type="submit">
