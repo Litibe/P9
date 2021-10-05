@@ -1,75 +1,57 @@
 {% load static %} {% block header %}
-<div class="container-fluid mb-4">
-  <div class="row">
-    <!-- NAVBAR -->
-    <div
-      id="divNavBar"
-      class="
-        bg-light
-        sticky-top
-        shadow
-        d-flex
-        flex-column
-        justify-content-center
-      "
-    >
-      <nav
-        class="
-          navbar
-          m-1
-          navbar-expand-md navbar-light
-          d-flex
-          flex-row
-          justify-content-around
-          align-content-around
-        "
-      >
-        <img
-          class="navbar-brand"
-          src="{% static 'img/logo_litreview.png' %}"
-          alt="Logo de LITReview"
-          width="4%"
-          data-toggle="tooltip"
-          data-placement="bottom"
-          title="Logo de LITReview"
-        />
 
-        {%  if user.is_authenticated %}
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarContent"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div id="navbarContent" class="collapse navbar-collapse">
-          <ul class="navbar-nav m-auto">
-            <li class="nav-item active m-1 shadow">
-              <a class="nav-link" href="{% url 'review:home' %}"> Accueil </a>
-            </li>
-
-            <li class="nav-item m-1 shadow">
-              <a class="nav-link" href="#"> Flux </a>
-            </li>
-            <li class="nav-item m-1 shadow">
-              <a class="nav-link" href="#"> Posts </a>
-            </li>
-            <li class="nav-item m-1 shadow">
-              <a class="nav-link" href="#"> Abonnements </a>
-            </li>
-            <li class="nav-item m-1 shadow">
-              <a class="nav-link" href="{% url 'authentication:deconnexion' %}">
-                Se déconnecter
-              </a>
-            </li>
-          </ul>
-        </div>
-        {% endif %}
-      </nav>
+<!-- NAVBAR -->
+<div
+  id="divNavBar"
+  class="bg-light mb-4 sticky-top shadow d-flex justify-content-center"
+>
+  <nav class="col navbar navbar-expand-md navbar-light">
+    <div class="col-4 text-center">
+      <img
+        class="navbar-brand pl-3"
+        src="{% static 'litreview_project/img/logo_litreview.png' %}"
+        alt="Logo de LITReview"
+        data-toggle="tooltip"
+        data-placement="bottom"
+        title="Le logo de Logo de LITReview"
+      />
     </div>
-  </div>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div
+      id="navbarSupportedContent"
+      class="col-10 mx-5 collapse navbar-collapse text-center"
+    >
+      <ul class="col-10 navbar-nav mx-3 d-flex justify-content-center">
+        {%  if user.is_authenticated %}
+        <li class="nav-item m-1 shadow">
+          <a class="nav-link" href="#"> Flux </a>
+        </li>
+        <li class="nav-item m-1 shadow">
+          <a class="nav-link" href="#"> Posts </a>
+        </li>
+        <li class="nav-item m-1 shadow">
+          <a class="nav-link" href="#"> Abonnements </a>
+        </li>
+        <li class="nav-item m-1 shadow">
+          <a class="nav-link" href="{% url 'authentication:deconnexion' %}">
+            Se déconnecter
+          </a>
+        </li>
+        {% endif %}
+      </ul>
+    </div>
+  </nav>
 </div>
 
 {% endblock %}
