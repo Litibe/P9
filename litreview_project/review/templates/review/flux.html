@@ -10,7 +10,9 @@
     background-size: cover;
   }
 </style>
-<div class="container col-12 col-md-9 col-lg-6 m-auto p-2 bg-light">
+<div
+  class="container col-12 col-md-9 col-lg-6 m-auto p-2 shadow-lg borderTitle"
+>
   <div class="row">
     <div class="jumbotron text-center">
       <h1>LITReview - Flux des demandes</h1>
@@ -22,7 +24,7 @@
   <div class="row">
     {% for ticket in tickets %}
 
-    <div class="m-3 p-5 bg-light">
+    <div class="m-3 p-5 bg-light borderLeft">
       <p>{{ticket.user}} a demandé une critique</p>
       <a
         href="../ticket/{{ ticket.id }}"
@@ -48,6 +50,9 @@
           >
         </button>
       </div>
+      {% if ticket.review %}
+      <p>{{review}}</p>
+      {% endif %}
     </div>
     {% endfor %}
   </div>

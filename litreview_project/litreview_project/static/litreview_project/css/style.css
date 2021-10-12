@@ -29,3 +29,16 @@
   background-color: #ffffff;
   border-left: solid 10px #e2a063 ;
 }
+
+.borderTitle{
+  transition: all 300ms;
+  background-color: #ffffffee;
+  border: solid 2px #1F828B ;
+  border-radius: 10px;
+  display: block;
+}
+.borderTitle:hover{
+  transition: all 300ms;
+  border: solid 2px #e2a063 ;
+  background-color: #ffffff;
+}

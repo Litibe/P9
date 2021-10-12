@@ -25,11 +25,13 @@ def create_new_ticket(request):
 @login_required
 def create_new_review_for_ticket(request, number_ticket):
     tickets = models.Ticket.objects.filter(id=number_ticket)
+    print(tickets)
     form = forms.ReviewForm()
     if request.method == 'POST':
-        form = forms.ReviewForm(request.POST, request.FILES)
+        form = forms.ReviewForm(request.POST)
         if form.is_valid():
             review = form.save(commit=False)
+            review.ticket = models.Ticket.objects.get(id=number_ticket)
             review.user = request.user
             # now we can save
             review.save()
@@ -57,7 +59,9 @@ def home(request):
 @login_required
 def flux(request):
     tickets = models.Ticket.objects.all().order_by('-time_created')
-    return render(request, 'review/flux.html', context={"tickets": tickets})
+    reviews = models.Review.objects.all().order_by('-time_created')
+    print(reviews)
+    return render(request, 'review/flux.html', context={"tickets": tickets, "reviews": reviews})
 
 
 @login_required
