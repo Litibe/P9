@@ -23,6 +23,28 @@ def create_new_ticket(request):
 
 
 @login_required
+def create_new_review_for_ticket(request, number_ticket):
+    tickets = models.Ticket.objects.filter(id=number_ticket)
+    form = forms.ReviewForm()
+    if request.method == 'POST':
+        form = forms.ReviewForm(request.POST, request.FILES)
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user
+            # now we can save
+            review.save()
+            return redirect('review:flux')
+    return render(request, 'review/create_new_review.html', context={'form': form, "tickets": tickets})
+
+
+@login_required
+def read_ticket(request, number_ticket):
+    print(number_ticket)
+    tickets = models.Ticket.objects.filter(id=number_ticket)
+    return render(request, 'review/read_ticket.html', context={"tickets": tickets})
+
+
+@login_required
 def create_new_review(request):
     return render(request, 'review/create_new_ticket.html')
 
@@ -34,10 +56,16 @@ def home(request):
 
 @login_required
 def flux(request):
-    tickets = models.Ticket.objects.all()
+    tickets = models.Ticket.objects.all().order_by('-time_created')
     return render(request, 'review/flux.html', context={"tickets": tickets})
 
 
 @login_required
 def posts(request):
     return render(request, 'review/posts.html')
+
+
+@login_required
+def read_ticket(request, number_ticket):
+    tickets = models.Ticket.objects.filter(id=number_ticket)
+    return render(request, 'review/read_ticket.html', context={"tickets": tickets})

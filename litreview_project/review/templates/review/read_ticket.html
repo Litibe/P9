@@ -1,0 +1,69 @@
+{% extends '_base.html' %} {% load static %}
+<!-- Page Home-->
+
+{% block main_content %}
+<style>
+  body {
+    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+<div class="container col-12 col-md-9 col-lg-6 m-auto p-2 bg-light">
+  <div class="row">
+    <div class="jumbotron text-center">
+      <h1>LITReview - Affichage du Ticket # {{ ticket.id }}</h1>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="m-3 p-5 bg-light">
+      {% for ticket in tickets %}
+      <div>
+        <p>{{ticket.user}} a demandé une critique</p>
+        <a
+          href="../ticket/{{ ticket.id }}"
+          style="color: inherit; text-decoration: none"
+        >
+          <h3 class="text-success">
+            Ticket #{{ ticket.id }} : {{ ticket.title }}
+          </h3></a
+        >
+        <p class="text-end">Date de demande : {{ticket.time_created}}</p>
+
+        <div class="border border-warning p-4 m-3">
+          <img src="{{ ticket.image.url }}" width="100px" />
+          <p class="text-primary m-3">Description de la demande :</p>
+          <p>{{ ticket.description }}</p>
+        </div>
+
+        {% endfor %}
+        <div class="m-4 pt-5 d-flex flex-row justify-content-around">
+          <div class="">
+            <button class="btn btn-outline-success">
+              <a
+                href="{% url 'review:flux' %}"
+                style="color: inherit; text-decoration: none"
+                >Retour</a
+              >
+            </button>
+          </div>
+          <div class="">
+            <button class="btn btn-warning">
+              <a
+                href="{% url 'review:create_new_review' %}"
+                style="color: inherit; text-decoration: none"
+                >Créer une critique</a
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {% endblock main_content %}
+</div>

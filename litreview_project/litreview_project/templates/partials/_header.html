@@ -3,7 +3,7 @@
 <!-- NAVBAR -->
 <div
   id="divNavBar"
-  class="bg-light mb-4 sticky-top shadow d-flex justify-content-center"
+  class="bg-light mb-3 sticky-top shadow d-flex justify-content-center"
 >
   <nav
     class="
@@ -15,12 +15,13 @@
   >
     <div class="col-4 text-center">
       <img
-        class="navbar-brand pl-3"
+        class="navbar-brand"
         src="{% static 'litreview_project/img/logo_litreview.png' %}"
         alt="Logo de LITReview"
         data-toggle="tooltip"
         data-placement="bottom"
         title="Le logo de Logo de LITReview"
+        width="10%"
       />
     </div>
     {% if user.is_authenticated %}
@@ -40,17 +41,17 @@
       id="navbarSupportedContent"
       class="col-10 mx-5 collapse navbar-collapse text-center"
     >
-      <ul class="col-10 navbar-nav mx-3 d-flex justify-content-center">
-        <li class="nav-item m-1 shadow">
+      <ul class="col-10 navbar-nav my-3 d-flex justify-content-center">
+        <li class="nav-item mx-1 shadow">
           <a class="nav-link" href="{% url 'review:flux' %}"> Flux </a>
         </li>
-        <li class="nav-item m-1 shadow">
+        <li class="nav-item mx-1 shadow">
           <a class="nav-link" href="{% url 'review:posts' %}"> Posts </a>
         </li>
-        <li class="nav-item m-1 shadow">
+        <li class="nav-item mx-1 shadow">
           <a class="nav-link disabled" href="#"> Abonnements </a>
         </li>
-        <li class="nav-item m-1 shadow">
+        <li class="nav-item mx-1 shadow">
           <a class="nav-link" href="{% url 'authentication:deconnexion' %}">
             Se déconnecter
           </a>
