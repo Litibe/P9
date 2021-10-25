@@ -84,11 +84,34 @@ def flux(request):
     reviews = models.Review.objects.all().order_by('-time_created')
     tickets = [ticket for ticket in tickets]
     for ticket in tickets:
+        if ticket.user_id == request.user:
+            ticket.user_id = "Vous"
+
         for review in reviews:
+            """
+            if review.rating == 0:
+                review.rating = ""
+            elif review.rating == 1:
+                review.rating = "⭐️"
+            elif review.rating == 2:
+                review.rating = "⭐️⭐️"
+            elif review.rating == 3:
+                review.rating = "⭐️⭐️⭐️"
+            elif review.rating == 4:
+                review.rating = "⭐️⭐️⭐️⭐️"
+            elif review.rating == 5:
+                review.rating = "⭐️⭐️⭐️⭐️⭐️
+            """
             if review.ticket_id == ticket.id:
                 ticket.review = review
 
     return render(request, 'review/flux.html', context={"tickets": tickets, "reviews": reviews})
+
+
+@login_required
+def modify_ticket(request, number_ticket):
+    tickets = get_object_or_404(models.Ticket, id=number_ticket)
+    return render(request, 'review/modify_ticket.html', context={"tickets": tickets})
 
 
 @login_required

@@ -10,21 +10,179 @@
     background-size: cover;
   }
 </style>
+
+<div class="container borderTitle col-12 col-md-9 col-lg-6 p-2 bg-light">
+  <div class="row">
+    <div class="text-center">
+      <h1>LITReview - Creation d'un Ticket & Critique</h1>
+    </div>
+  </div>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="my-4 d-flex flex-row justify-content-center">
       <div class="col-12 col-md-10 borderLeft">
-        <h2 class="text-center m-3">
-          Creation d'un ticket & d'une critique associée
-        </h2>
+        <h2 class="text-center m-3">Creation d'un ticket</h2>
         <p class="text-center m-2">Merci de remplir les champs requis, svp</p>
         <div class="m-auto p-3">
           {% if form.errors %} {{ form.errors }} {% endif %}
           <form method="post" enctype="multipart/form-data">
-            {% csrf_token %} {{ticket_form.as_p}}
+            {% csrf_token %}
+            <div>
+              <div class="form-group m-2 p-2">
+                <label for="id_title">Titre de la demande : </label>
+                <input
+                  type="text"
+                  name="title"
+                  maxlength="128"
+                  id="id_title"
+                  aria-describedby="titleHelp"
+                  placeholder="Votre titre"
+                  required
+                /><br />
+                <small id="titleHelp" class="form-text text-muted"
+                  >Entrer le titre de l'ouvrage suivi de son auteur.</small
+                >
+              </div>
+              <hr />
+              <div class="form-group m-2 p-2">
+                <label for="id_description"
+                  >Description de votre demande : </label
+                ><br />
+                <textarea
+                  name="description"
+                  rows="5"
+                  maxlength="2048"
+                  id="id_description"
+                  aria-describedby="descriptionHelp"
+                  placeholder="Votre description"
+                  required
+                  class="col-10"
+                ></textarea>
+                <br />
+                <small id="descriptionHelp" class="form-text text-muted"
+                  >Essayer d'être le plus précis possible, pensez à indiquer le
+                  Titre de l'Ouvrage ainsi que son Auteur, si cela n'est pas
+                  déjà renseignés.</small
+                >
+              </div>
+              <hr />
+              <div class="form-group m-2 p-2">
+                <label for="id_image">Image de l'Ouvrage : </label>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  id="id_image"
+                  aria-describedby="imageHelp"
+                /><br />
+                <small id="imageHelp" class="form-text text-muted"
+                  >Vous pouvez importer une image de l'ouvrage pour une
+                  meilleure reconnaissance pour les autres utilisateurs<br />
+                  Attention, seuls les fichiers de type "images" sont autorisés
+                  !</small
+                >
+              </div>
+            </div>
             <hr />
-            {{review_form.as_p}}
-            <hr />
+            <div>
+              <h2 class="text-center m-3">Creation d'une critique</h2>
+              <div class="form-group m-2 p-2">
+                <label for="id_headline">Titre : </label>
+                <input
+                  type="text"
+                  name="headline"
+                  maxlength="128"
+                  id="id_headline"
+                  placeholder="Votre titre de critique"
+                  required
+                /><br />
+              </div>
+              <hr />
+
+              <div class="form-group m-2 p-2">
+                <label for="id_rating">Note :</label>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rating"
+                    id="rating0"
+                    value="0"
+                  />
+                  <label class="form-check-label" for="rating0">- 0</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rating"
+                    id="rating1"
+                    value="1"
+                  />
+                  <label class="form-check-label" for="rating1">- 1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rating"
+                    id="rating2"
+                    value="2"
+                  />
+                  <label class="form-check-label" for="rating2">- 2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rating"
+                    id="rating3"
+                    value="3"
+                  />
+                  <label class="form-check-label" for="rating3">- 3</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rating"
+                    id="rating4"
+                    value="4"
+                  />
+                  <label class="form-check-label" for="rating4">- 4</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="rating"
+                    id="rating5"
+                    value="5"
+                  />
+                  <label class="form-check-label" for="rating5">- 5</label>
+                </div>
+
+                <br />
+              </div>
+              <hr />
+
+              <div class="form-group m-2 p-2">
+                <label for="id_description">Commentaire : </label><br />
+                <textarea
+                  name="description"
+                  cols="80"
+                  rows="5"
+                  maxlength="2048"
+                  id="id_description"
+                  placeholder="Explicitez votre critique..."
+                  required
+                ></textarea>
+                <br />
+              </div>
+              <hr />
+            </div>
             <div class="text-center">
               <button class="btn btn-outline-danger" type="submit">
                 <a
