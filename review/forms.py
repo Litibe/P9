@@ -1,15 +1,16 @@
 from django import forms
 
-from . import models
+from django.db import models
+from . import models as models_review
 
 
 class TicketForm(forms.ModelForm):
     class Meta:
-        model = models.Ticket
+        model = models_review.Ticket
         fields = ['title', 'description', 'image']
 
 
 class ReviewForm(forms.ModelForm):
     class Meta:
-        model = models.Review
-        fields = ['headline', 'rating', 'body']
+        model = models_review.Review
+        fields = ["headline", 'rating', 'body']

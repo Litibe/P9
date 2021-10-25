@@ -40,30 +40,46 @@
           <p>{{ ticket.description }}</p>
         </div>
 
-        {% endfor %}
-        <div class="m-4 pt-5 d-flex flex-row justify-content-around">
-          <div class="">
-            <button class="btn btn-outline-success">
-              <a
-                href="{% url 'review:flux' %}"
-                style="color: inherit; text-decoration: none"
-                >Retour</a
-              >
-            </button>
+        {% endfor %} {% for review in reviews %}
+        <div>
+          <p>{{review.user_id}} a publié une critique</p>
+          <h3>{{review.headline}} - {{review.rating}}</h3>
+
+          <div class="border border-warning p-4 m-3">
+            <p class="text-primary m-3">Description de la critique :</p>
+            <p>{{ review.body }}</p>
           </div>
-          <div class="">
-            <button class="btn btn-warning">
-              <a
-                href="{% url 'review:create_new_review' %}"
-                style="color: inherit; text-decoration: none"
-                >Créer une critique</a
-              >
-            </button>
+
+          {% endfor %}
+          {% for review in reviews %}
+        {{review}}vvv
+          </div>
+
+          {% endfor %}
+          <div class="m-4 pt-5 d-flex flex-row justify-content-around">
+            <div class="">
+              <button class="btn btn-outline-success">
+                <a
+                  href="{% url 'review:flux' %}"
+                  style="color: inherit; text-decoration: none"
+                  >Retour</a
+                >
+              </button>
+            </div>
+            <div class="">
+              <button class="btn btn-warning">
+                <a
+                  href="{% url 'review:create_new_review' %}"
+                  style="color: inherit; text-decoration: none"
+                  >Créer une critique</a
+                >
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  {% endblock main_content %}
+    {% endblock main_content %}
+  </div>
 </div>

@@ -1,0 +1,47 @@
+{% extends '_base.html' %} {% load static %}
+<!-- Page Home-->
+
+{% block main_content %}
+<style>
+  body {
+    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+<div class="container">
+  <div class="row">
+    <div class="my-4 d-flex flex-row justify-content-center">
+      <div class="col-12 col-md-10 borderLeft">
+        <h2 class="text-center m-3">
+          Creation d'un ticket & d'une critique associée
+        </h2>
+        <p class="text-center m-2">Merci de remplir les champs requis, svp</p>
+        <div class="m-auto p-3">
+          {% if form.errors %} {{ form.errors }} {% endif %}
+          <form method="post" enctype="multipart/form-data">
+            {% csrf_token %} {{ticket_form.as_p}}
+            <hr />
+            {{review_form.as_p}}
+            <hr />
+            <div class="text-center">
+              <button class="btn btn-outline-danger" type="submit">
+                <a
+                  href="{% url 'review:flux' %}"
+                  style="color: inherit; text-decoration: none"
+                  >Retour</a
+                >
+              </button>
+              <button class="btn btn-outline-success" type="submit">
+                Envoyer la demande
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock main_content %}

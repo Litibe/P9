@@ -40,3 +40,15 @@ def inscription(request):
             login(request, user)
             return redirect("review:home")
     return render(request, 'authentication/inscription.html', context={'form': form})
+
+
+@login_required
+def user_picture(request):
+    form = users_form.UserPictureForm(instance=request.user)
+    if request.method == 'POST':
+        form = users_form.UserPictureForm(
+            request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('review:home')
+    return render(request, 'authentication/user_picture.html', context={'form': form})
