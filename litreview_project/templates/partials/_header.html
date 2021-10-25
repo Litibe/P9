@@ -3,7 +3,7 @@
 <!-- NAVBAR -->
 <div
   id="divNavBar"
-  class="bg-light mb-3 sticky-top shadow d-flex justify-content-center"
+  class="bg-light mb-3 sticky-top shadow d-flex flew-row justify-content-center"
 >
   <nav
     class="
@@ -39,9 +39,17 @@
 
     <div
       id="navbarSupportedContent"
-      class="col-10 mx-5 collapse navbar-collapse text-center"
+      class="collapse navbar-collapse text-center m-auto"
     >
-      <ul class="col-10 navbar-nav my-3 d-flex justify-content-center">
+      <ul
+        class="
+          col-sm-6 col-md-9
+          navbar-nav
+          d-flex
+          justify-content-center
+          m-auto
+        "
+      >
         <li class="nav-item mx-1 shadow">
           <a class="nav-link" href="{% url 'review:flux' %}"> Flux </a>
         </li>
