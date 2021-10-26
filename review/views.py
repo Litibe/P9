@@ -65,8 +65,8 @@ def create_new_review(request):
 
 
 @login_required
-def home(request):
-    return render(request, 'review/home.html')
+def follow(request):
+    return render(request, 'review/follow.html')
 
 
 @login_required

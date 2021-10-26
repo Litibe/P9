@@ -1,0 +1,26 @@
+{% extends '_base.html' %} {% load static %}
+<!-- Page Home-->
+
+{% block main_content %}
+<style>
+  body {
+    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+</style>
+<div class="container col-12 col-md-9 col-lg-6 p-2">
+  <div class="row">
+    <div class="text-center borderTitle shadow-lg m-4">
+      <h1>LITReview - Espace Abonnements</h1>
+    </div>
+    <div class="borderLeft m-4">
+      <h2 class="text-center">Suivre d'autres utilisateurs</h2>
+    </div>
+    <div class="borderLeft m-4"><h2 class="text-center">Abonnements</h2></div>
+    <div class="borderLeft m-4"><h2 class="text-center">Abonnés</h2></div>
+  </div>
+</div>
+
+{% endblock main_content %}
