@@ -13,7 +13,7 @@
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle bg-light">
   <div class="row">
     <div class="text-center">
-      <h1>LITReview - Modifier votre Ticket</h1>
+      <h1>LITReview - Modifier votre critique</h1>
     </div>
   </div>
 </div>
@@ -21,13 +21,23 @@
 <div class="container">
   <div class="row">
     <div class="my-4 d-flex flex-row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8 borderLeft">
-        {% if tickets%}
+      <div class="col-12 col-md-10 borderLeft">
+        {% if ticket %}
+
+        <div class="p-4">
+          <p>
+            Vous êtes en train de poster en réponse à </p>
+            {% include "review/partials/_flux_ticket_only.html" %}
+          </p>
+        </div>
+
+        <!---->
+        {%endif%} {% if reviews%}
         <h2 class="text-center m-3">Merci de remplir les champs requis, svp</h2>
         {% else %}
         <h2 class="text-center m-3">
-          Vous n'etes pas le créateur du Ticket,<br />
-          vous ne pouvez pas le modifier !
+          Vous n'etes pas le créateur de la critique,<br />
+          vous ne pouvez pas la modifier !
         </h2>
         {% endif %}
         <div class="m-auto p-3">
@@ -36,22 +46,23 @@
             {% csrf_token %}{{ form.as_p }}
 
             <div class="text-center">
-              {% if tickets%}
+              
+              {% if reviews%}
               <button class="btn btn-outline-success" type="submit">
                 Modifier
               </button>
-              {% endif %}
+              {%endif%}
             </div>
           </form>
           <div class="text-center">
-            <button class="btn btn-outline-danger" type="submit">
-              <a
-                href="{% url 'review:post' %}"
-                style="color: inherit; text-decoration: none"
-                >Retour</a
-              >
-            </button>
-          </div>
+              <button class="btn btn-outline-danger" type="submit">
+                <a
+                  href="javascript:history.back()"
+                  style="color: inherit; text-decoration: none"
+                  >Retour</a
+                >
+              </button>
+            </div>
         </div>
       </div>
     </div>

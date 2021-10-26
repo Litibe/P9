@@ -13,7 +13,7 @@
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle bg-light">
   <div class="row">
     <div class="text-center">
-      <h1>LITReview - Modifer un Ticket</h1>
+      <h1>LITReview - Supprimer votre Ticket</h1>
     </div>
   </div>
 </div>
@@ -21,79 +21,41 @@
 <div class="container">
   <div class="row">
     <div class="my-4 d-flex flex-row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8 borderLeft">
-        <h2 class="text-center m-3">Merci de remplir les champs requis, svp</h2>
+      <div class="col-12 col-md-10 borderLeft">
+        <h2 class="text-center text-danger m-3">
+          {% if review %} Etes-vous sûr de vouloir supprimer votre ticket avec
+          sa critique associée ? {% else %} Etes-vous sûr de vouloir supprimer
+          votre ticket ? {% endif %}
+        </h2>
+        <div class="p-4">
+          {% if review %}
+          <!---->
+          {% include "review/partials/_flux_review_with_ticket.html" %}
+          <!---->
+          {% else %}
+          <!---->
+          {% include "review/partials/_flux_ticket_without_review.html" %}<!---->
+          {% endif %}
+        </div>
         <div class="m-auto p-3">
           {% if form.errors %} {{ form.errors }} {% endif %}
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <div class="form-group m-2 p-2">
-              <label for="id_title">Titre de la demande : </label>
-              <input
-                type="text"
-                name="title"
-                maxlength="128"
-                id="id_title"
-                aria-describedby="titleHelp"
-                placeholder="Votre titre"
-                required
-              /><br />
-              <small id="titleHelp" class="form-text text-muted"
-                >Entrer le titre de l'ouvrage suivi de son auteur.</small
-              >
-            </div>
-            <hr />
-            <div class="form-group m-2 p-2">
-              <label for="id_description">Description de votre demande : </label
-              ><br />
-              <textarea
-                name="description"
-                cols="80"
-                rows="5"
-                maxlength="2048"
-                id="id_description"
-                aria-describedby="descriptionHelp"
-                placeholder="Votre description"
-                required
-              ></textarea>
-              <br />
-              <small id="descriptionHelp" class="form-text text-muted"
-                >Essayer d'être le plus précis possible, pensez à indiquer le
-                Titre de l'Ouvrage ainsi que son Auteur, si cela n'est pas déjà
-                renseignés.</small
-              >
-            </div>
-            <hr />
-            <div class="form-group m-2 p-2">
-              <label for="id_image">Image de l'Ouvrage : </label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                id="id_image"
-                aria-describedby="imageHelp"
-              /><br />
-              <small id="imageHelp" class="form-text text-muted"
-                >Vous pouvez importer une image de l'ouvrage pour une meilleure
-                reconnaissance pour les autres utilisateurs<br />
-                Attention, seuls les fichiers de type "images" sont autorisés
-                !</small
-              >
-            </div>
-            <hr />
             <div class="text-center">
               <button class="btn btn-outline-danger" type="submit">
-                <a
-                  href="{% url 'review:flux' %}"
-                  style="color: inherit; text-decoration: none"
-                  >Retour</a
-                >
-              </button>
-              <button class="btn btn-outline-success" type="submit">
-                Envoyer la demande
+                Je confirme ma demande de suppression
               </button>
             </div>
           </form>
+          <div class="text-center">
+            <button class="btn btn-outline-success" type="submit">
+              <a
+                href="{% url 'review:posts' %}"
+                style="color: inherit; text-decoration: none"
+                >Retour</a
+              >
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -60,14 +60,6 @@ def create_new_review_for_ticket(request, number_ticket):
 
 
 @login_required
-def read_ticket(request, number_ticket):
-    tickets = get_object_or_404(models.Ticket, id=number_ticket)
-    reviews = get_object_or_404(
-        models.Review, ticket_id=number_ticket)
-    return render(request, 'review/read_ticket.html', context={"tickets": tickets, "reviews": reviews})
-
-
-@login_required
 def create_new_review(request):
     return render(request, 'review/create_new_review.html')
 
@@ -114,12 +106,12 @@ def modify_ticket(request, number_ticket):
     if request.user.id == tickets.user_id:
         form = forms.TicketForm(instance=tickets)
         if request.method == 'POST':
-            form = forms.TicketForm(request.POST, request.FILES)
+            form = forms.TicketForm(
+                request.POST, request.FILES, instance=tickets)
             if form.is_valid():
                 ticket = form.save(commit=False)
-                ticket.user = request.user
                 ticket.save()
-                return redirect('review:post')
+                return redirect('review:posts')
         context = {"form": form, "tickets": tickets,
                    "number_ticket": number_ticket}
     else:
@@ -130,13 +122,81 @@ def modify_ticket(request, number_ticket):
 
 @login_required
 def read_ticket(request, number_ticket):
-    ticket = get_object_or_404(models.Ticket, id=number_ticket)
-    return render(request, 'review/read_ticket.html', context={"ticket": ticket, "number_ticket": number_ticket})
+    try:
+        ticket = get_object_or_404(models.Ticket, id=number_ticket)
+        context = {"ticket": ticket, "number_ticket": number_ticket}
+        try:
+            review = get_object_or_404(
+                models.Review, ticket_id=number_ticket)
+            ticket.review = review
+            context = {"ticket": ticket,
+                       "number_ticket": number_ticket, "review": review}
+        except:
+            pass
+    except:
+        context = {"number_ticket": number_ticket}
+
+    return render(request, 'review/read_ticket.html', context=context)
 
 
 @login_required
 def delete_ticket(request, number_ticket):
-    tickets = models.Ticket.objects.filter(id=number_ticket)
+    try:
+        ticket = get_object_or_404(models.Ticket, id=number_ticket)
+        review = get_object_or_404(
+            models.Review, ticket_id=number_ticket)
+        if ticket:
+            context = {"ticket": ticket, "number_ticket": number_ticket}
+        if review:
+            ticket.review = review
+            context = {"ticket": ticket,
+                       "number_ticket": number_ticket, "review": review}
+    except:
+        context = {"number_ticket": number_ticket}
     if request.method == 'POST':
-        print("effacement")
-    return render(request, 'review/delete_ticket.html', context={"tickets": tickets})
+        try:
+            review = get_object_or_404(models.Review, ticket_id=number_ticket)
+            review.delete()
+        except:
+            pass
+        ticket = get_object_or_404(
+            models.Ticket, id=number_ticket)
+        ticket.delete()
+        return redirect("review:posts")
+    return render(request, 'review/delete_ticket.html', context=context)
+
+
+# GESTION REVIEW
+
+
+@login_required
+def modify_review(request, number_review):
+    reviews = get_object_or_404(models.Review, id=number_review)
+    ticket = get_object_or_404(models.Ticket, id=reviews.ticket_id)
+    if request.user.id == reviews.user_id:
+        form = forms.ReviewForm(instance=reviews)
+        if request.method == 'POST':
+            form = forms.ReviewForm(
+                request.POST, request.FILES, instance=reviews)
+            if form.is_valid():
+                review = form.save(commit=False)
+                review.save()
+                return redirect('review:flux')
+        context = {"form": form, "reviews": reviews,
+                   "number_review": number_review, "ticket": ticket}
+    else:
+        context = {"number_review": number_review}
+
+    return render(request, 'review/modify_review.html', context=context)
+
+
+@login_required
+def delete_review(request, number_review):
+    review = get_object_or_404(models.Review, id=number_review)
+    ticket = get_object_or_404(models.Ticket, id=review.ticket_id)
+    ticket.review = review
+    if request.method == 'POST':
+        review = get_object_or_404(models.Review, id=number_review)
+        review.delete()
+        return redirect("review:posts")
+    return render(request, 'review/delete_review.html', context={"review": review, "ticket": ticket})

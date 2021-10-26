@@ -21,6 +21,7 @@
 <div class="container">
   <div class="row">
     <div class="m-3 p-5 bg-light">
+      {% if ticket %}
       <div>
         {% if request.user.id == ticket.user.id%}
         <p>Vous avez demandé une critique</p>
@@ -67,6 +68,7 @@
             </button>
           </div>
           <div class="">
+            {%if not review%}
             <button class="btn btn-outline-success">
               <a
                 href="{% url 'review:create_new_review_for_ticket' number_ticket %}"
@@ -74,7 +76,7 @@
                 >Créer une critique</a
               >
             </button>
-            {% if request.user.id == ticket.user_id%}
+            {% endif%} {% if request.user.id == ticket.user_id%}
 
             <button class="btn btn-outline-primary">
               <a
@@ -95,6 +97,19 @@
           </div>
         </div>
       </div>
+      {% else %}
+      <p>Il n'y a pas de N° de Ticket associé - ticket supprimé</p>
+
+      <div class="text-center">
+        <button class="btn btn-outline-success">
+          <a
+            href="javascript:history.back()"
+            style="color: inherit; text-decoration: none"
+            >Retour</a
+          >
+        </button>
+      </div>
+      {% endif%}
     </div>
   </div>
 </div>
