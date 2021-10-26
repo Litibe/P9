@@ -11,7 +11,7 @@ class Ticket(models.Model):
     description = models.TextField(max_length=2048, blank=True, null=True)
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, blank=True, null=True)
-    image = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True)
     time_created = models.DateTimeField(
         default=timezone.now)
 

@@ -41,11 +41,14 @@
       {% for ticket in tickets %}
       <!--if critique associé au ticket-->
       {% if ticket.review %}
+       {% if ticket.review.user_id == request.user.id %}
       <!---->
       {% include "review/partials/_flux_review_with_ticket.html" %}<!---->
-      {% include "review/partials/_flux_ticket_only.html" %}
+       {% if ticket.user_id == request.user.id %}
+      {% include "review/partials/_flux_ticket_only.html" %}{% endif %}{% endif %}
       <!---->{% else %} <!---->
-      {% include "review/partials/_flux_ticket_without_review.html" %}
+      {% if ticket.user_id == request.user.id %}
+      {% include "review/partials/_flux_ticket_without_review.html" %}{% endif %}
       <!---->{% endif %} {% endfor%}
     </div>
   </div>

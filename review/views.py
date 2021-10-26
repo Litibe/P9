@@ -83,8 +83,7 @@ def follow(request):
     if request.method == 'POST':
         user_form = forms.UserFollowsForm(request.POST)
         remove_user_followed_form = forms.UserRemoveFollowsForm(request.POST)
-        print(request.POST)
-        print(remove_user_followed_form.is_valid())
+
         if user_form.is_valid():
             user_form.save(commit=False)
             try:
@@ -111,15 +110,28 @@ def follow(request):
 
 @ login_required
 def flux(request):
-    tickets = models.Ticket.objects.all().order_by('-time_created')
-    reviews = models.Review.objects.all().order_by('-time_created')
-    tickets = [ticket for ticket in tickets]
-    for ticket in tickets:
-        for review in reviews:
-            if review.ticket_id == ticket.id:
-                ticket.review = review
+    all_followed = models.UserFollows.objects.filter(user=request.user.id)
+    all_followed_id = [followed.followed_user_id for followed in all_followed]
+    all_followed_id.append(request.user.id)
 
-    return render(request, 'review/flux.html', context={"tickets": tickets, "reviews": reviews})
+    all_tickets = models.Ticket.objects.all().order_by('-time_created')
+    tickets = models.Ticket.objects.all().order_by(
+        '-time_created').filter(user_id__in=all_followed_id)
+    reviews = models.Review.objects.all().order_by(
+        '-time_created').filter(user_id__in=all_followed_id)
+    all_ticket = [ticket for ticket in tickets]
+    for ticket in all_tickets:
+        for review in reviews:
+            if review.user_id not in all_followed_id:
+                pass
+            else:
+                if review.ticket_id == ticket.id:
+                    ticket.review = review
+                    all_ticket.append(ticket)
+                    print("append")
+
+    print(all_ticket)
+    return render(request, 'review/flux.html', context={"tickets": all_ticket, "reviews": reviews})
 
 
 @ login_required
@@ -183,14 +195,15 @@ def read_ticket(request, number_ticket):
 def delete_ticket(request, number_ticket):
     try:
         ticket = get_object_or_404(models.Ticket, id=number_ticket)
-        review = get_object_or_404(
-            models.Review, ticket_id=number_ticket)
-        if ticket:
-            context = {"ticket": ticket, "number_ticket": number_ticket}
-        if review:
+        context = {"ticket": ticket, "number_ticket": number_ticket}
+        try:
+            review = get_object_or_404(
+                models.Review, ticket_id=number_ticket)
             ticket.review = review
             context = {"ticket": ticket,
                        "number_ticket": number_ticket, "review": review}
+        except:
+            pass
     except:
         context = {"number_ticket": number_ticket}
     if request.method == 'POST':
