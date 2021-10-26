@@ -13,30 +13,40 @@
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle">
   <div class="row">
     <div class="jumbotron text-center">
-      <h1>LITReview - Espace Membres</h1>
+      <h1>LITReview - Mes Posts</h1>
       <p>Bonjour, {{user.username}} !</p>
+      {% if user.profile_photo %}
+        <img src="{{user.profile_photo }}" width="100px" />
+      </div>
+      {% else %}
+      <p>Vous n'avez pas encore de photos de profil</p>
+<div class=" text-center">
+      <button class="m-2 col-3 btn btn-outline-primary" type="submit">
+        <a
+          href="{% url 'authentication:user_picture' %}"
+          style="color: inherit; text-decoration: none"
+          >Ajouter sa photo</a
+        >
+      </button>
+      </div>
+      {% endif %}
+      
     </div>
   </div>
 </div>
 
 <div class="container">
-  <div class="row p-2 borderLeft m-4 d-flex justify-content-around">
-    <h2 class="text-center p-5">Merci de faire votre choix :</h2>
-    <div class="col-4 p-5 justify-content-center">
-      <a
-        style="text-decoration: none; color: inherit"
-        href="{% url 'review:create_new_ticket' %}"
-        class="btn btn-warning m-auto"
-        >Demander une critique</a
-      >
-    </div>
-    <div class="col-4 p-5 d-flex justify-content-center">
-      <a
-        style="text-decoration: none; color: inherit"
-        href="{% url 'review:create_new_review' %}"
-        class="btn btn-warning m-auto"
-        >Créer une critique</a
-      >
+  <div class="row my-3 d-flex justify-content-around">
+    <div class="">
+      {% for ticket in tickets %}
+      <!--if critique associé au ticket-->
+      {% if ticket.review %}
+      <!---->
+      {% include "review/partials/_flux_review_with_ticket.html" %}<!---->
+      {% include "review/partials/_flux_ticket_only.html" %}
+      <!---->{% else %} <!---->
+      {% include "review/partials/_flux_ticket_without_review.html" %}
+      <!---->{% endif %} {% endfor%}
     </div>
   </div>
 </div>

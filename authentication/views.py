@@ -50,5 +50,5 @@ def user_picture(request):
             request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect('review:home')
+            return redirect('review:flux')
     return render(request, 'authentication/user_picture.html', context={'form': form})

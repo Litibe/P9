@@ -27,9 +27,11 @@ urlpatterns = [
          views.create_new_review_for_ticket, name='create_new_review_for_ticket'),
     path('create_new_ticket_and_review',
          views.create_new_ticket_and_review, name='create_new_ticket_and_review'),
-
+    path('delete_ticket/<int:number_ticket>',
+         views.delete_ticket, name='delete_ticket'),
     path('modify_ticket/<int:number_ticket>',
          views.modify_ticket, name='modify_ticket'),
+
     path('ticket/<int:number_ticket>', views.read_ticket, name='read_ticket'),
     path('flux', views.flux, name='flux'),
     path('posts', views.posts, name='posts'),

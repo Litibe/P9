@@ -13,7 +13,7 @@
 <div class="container col-12 col-md-9 col-lg-6 m-auto p-2 borderTitle">
   <div class="row">
     <div class="jumbotron text-center">
-      <h1>LITReview - Affichage du Ticket # {{ ticket.id }}</h1>
+      <h1>LITReview - Affichage du Ticket #{{ticket.id}}</h1>
     </div>
   </div>
 </div>
@@ -21,9 +21,12 @@
 <div class="container">
   <div class="row">
     <div class="m-3 p-5 bg-light">
-      {% for ticket in tickets %}
       <div>
+        {% if request.user.id == ticket.user.id%}
+        <p>Vous avez demandé une critique</p>
+        {%else%}
         <p>{{ticket.user}} a demandé une critique</p>
+        {% endif%}
         <a
           href="../ticket/{{ ticket.id }}"
           style="color: inherit; text-decoration: none"
@@ -40,7 +43,7 @@
           <p>{{ ticket.description }}</p>
         </div>
 
-        {% endfor %} {% for review in reviews %}
+        {% for review in reviews %}
         <div>
           <p>{{review.user_id}} a publié une critique</p>
           <h3>{{review.headline}} - {{review.rating}}</h3>
@@ -50,36 +53,49 @@
             <p>{{ review.body }}</p>
           </div>
 
-          {% endfor %}
-          {% for review in reviews %}
-        {{review}}vvv
-          </div>
+          {% endfor %} {% for review in reviews %} {{review}}{% endfor %}
+        </div>
 
-          {% endfor %}
-          <div class="m-4 pt-5 d-flex flex-row justify-content-around">
-            <div class="">
-              <button class="btn btn-outline-success">
-                <a
-                  href="{% url 'review:flux' %}"
-                  style="color: inherit; text-decoration: none"
-                  >Retour</a
-                >
-              </button>
-            </div>
-            <div class="">
-              <button class="btn btn-warning">
-                <a
-                  href="{% url 'review:create_new_review' %}"
-                  style="color: inherit; text-decoration: none"
-                  >Créer une critique</a
-                >
-              </button>
-            </div>
+        <div class="m-4 pt-5 d-flex flex-row justify-content-around">
+          <div class="">
+            <button class="btn btn-outline-success">
+              <a
+                href="javascript:history.back()"
+                style="color: inherit; text-decoration: none"
+                >Retour</a
+              >
+            </button>
+          </div>
+          <div class="">
+            <button class="btn btn-outline-success">
+              <a
+                href="{% url 'review:create_new_review_for_ticket' number_ticket %}"
+                style="color: inherit; text-decoration: none"
+                >Créer une critique</a
+              >
+            </button>
+            {% if request.user.id == ticket.user_id%}
+
+            <button class="btn btn-outline-primary">
+              <a
+                href="../modify_ticket/{{ticket.id}}"
+                style="color: inherit; text-decoration: none"
+                >Modifier
+              </a>
+            </button>
+            <button class="btn btn-outline-danger">
+              <a
+                href="../delete_ticket/{{ticket.id}}"
+                style="color: inherit; text-decoration: none"
+                >Supprimer
+              </a>
+            </button>
+
+            {% endif %}
           </div>
         </div>
       </div>
     </div>
-
-    {% endblock main_content %}
   </div>
 </div>
+{% endblock main_content %}

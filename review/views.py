@@ -46,7 +46,6 @@ def create_new_ticket_and_review(request):
 @login_required
 def create_new_review_for_ticket(request, number_ticket):
     tickets = models.Ticket.objects.filter(id=number_ticket)
-    print(tickets)
     form = forms.ReviewForm()
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
@@ -70,7 +69,7 @@ def read_ticket(request, number_ticket):
 
 @login_required
 def create_new_review(request):
-    return render(request, 'review/create_new_ticket.html')
+    return render(request, 'review/create_new_review.html')
 
 
 @login_required
@@ -84,24 +83,7 @@ def flux(request):
     reviews = models.Review.objects.all().order_by('-time_created')
     tickets = [ticket for ticket in tickets]
     for ticket in tickets:
-        if ticket.user_id == request.user:
-            ticket.user_id = "Vous"
-
         for review in reviews:
-            """
-            if review.rating == 0:
-                review.rating = ""
-            elif review.rating == 1:
-                review.rating = "⭐️"
-            elif review.rating == 2:
-                review.rating = "⭐️⭐️"
-            elif review.rating == 3:
-                review.rating = "⭐️⭐️⭐️"
-            elif review.rating == 4:
-                review.rating = "⭐️⭐️⭐️⭐️"
-            elif review.rating == 5:
-                review.rating = "⭐️⭐️⭐️⭐️⭐️
-            """
             if review.ticket_id == ticket.id:
                 ticket.review = review
 
@@ -109,17 +91,52 @@ def flux(request):
 
 
 @login_required
-def modify_ticket(request, number_ticket):
-    tickets = get_object_or_404(models.Ticket, id=number_ticket)
-    return render(request, 'review/modify_ticket.html', context={"tickets": tickets})
+def posts(request):
+    my_tickets = models.Ticket.objects.filter(
+        user_id=request.user.id).order_by('-time_created')
+
+    tickets = models.Ticket.objects.all().order_by('-time_created')
+    reviews = models.Review.objects.filter(
+        user_id=request.user.id).order_by('-time_created')
+    tickets = [ticket for ticket in tickets]
+    for ticket in tickets:
+        for review in reviews:
+            if review.ticket_id == ticket.id:
+                ticket.review = review
+
+    return render(request, 'review/posts.html', context={"tickets": tickets, "reviews": reviews, "my_tickets": my_tickets})
+# GESTION TICKETS
 
 
 @login_required
-def posts(request):
-    return render(request, 'review/posts.html')
+def modify_ticket(request, number_ticket):
+    tickets = get_object_or_404(models.Ticket, id=number_ticket)
+    if request.user.id == tickets.user_id:
+        form = forms.TicketForm(instance=tickets)
+        if request.method == 'POST':
+            form = forms.TicketForm(request.POST, request.FILES)
+            if form.is_valid():
+                ticket = form.save(commit=False)
+                ticket.user = request.user
+                ticket.save()
+                return redirect('review:post')
+        context = {"form": form, "tickets": tickets,
+                   "number_ticket": number_ticket}
+    else:
+        context = {"number_ticket": number_ticket}
+
+    return render(request, 'review/modify_ticket.html', context=context)
 
 
 @login_required
 def read_ticket(request, number_ticket):
+    ticket = get_object_or_404(models.Ticket, id=number_ticket)
+    return render(request, 'review/read_ticket.html', context={"ticket": ticket, "number_ticket": number_ticket})
+
+
+@login_required
+def delete_ticket(request, number_ticket):
     tickets = models.Ticket.objects.filter(id=number_ticket)
-    return render(request, 'review/read_ticket.html', context={"tickets": tickets})
+    if request.method == 'POST':
+        print("effacement")
+    return render(request, 'review/delete_ticket.html', context={"tickets": tickets})
