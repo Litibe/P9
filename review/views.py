@@ -129,8 +129,15 @@ def flux(request):
                     ticket.review = review
                     all_ticket.append(ticket)
                     print("append")
-
-    print(all_ticket)
+    all_ticket_id = [ticket.id for ticket in all_ticket]
+    all_ticket_id.sort()
+    all_tickets = models.Ticket.objects.filter(
+        id__in=all_ticket_id).order_by('-time_created')
+    all_ticket = [ticket for ticket in all_tickets]
+    for ticket in all_ticket:
+        for review in reviews:
+            if review.ticket_id == ticket.id:
+                ticket.review = review
     return render(request, 'review/flux.html', context={"tickets": all_ticket, "reviews": reviews})
 
 

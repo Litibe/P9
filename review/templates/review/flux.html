@@ -40,7 +40,7 @@
       {% for ticket in tickets %}
       <!--if critique associé au ticket-->
       {% if ticket.review %}
-      <div class="border border-success p-4 m-3 bg-light borderLeft">
+      <div class="border border-success border-3 p-4 m-3 bg-light borderLeft">
         {% if ticket.review.user_id == request.user.id %}
         <p>Vous avez publié une critique</p>
         {% else %}
@@ -60,7 +60,7 @@
         </h3>
         <p>{{ticket.review.body}}</p>
 
-        <div class="border border-primary p-4 m-3">
+        <div class="border border-primary border-3 p-4 m-3">
           {% if ticket.user_id == request.user.id %}
           <p>Vous avez demandé une critique</p>
           {% else %}
@@ -76,17 +76,14 @@
           >
           <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
-          <div class="border border-primary p-4 m-3">
-            {% if ticket.image.url %}
-            <img src="{{ ticket.image.url }}" width="100px" />
-            {% endif %}
-            <p class="text-primary m-3">Description de la demande :</p>
-            <p>{{ ticket.description }}</p>
-          </div>
+          {% if ticket.image.url %}
+          <img src="{{ ticket.image.url }}" width="100px" />
+          {% endif %}
+          <p>{{ ticket.description }}</p>
         </div>
       </div>
       {% else %}
-      <div class="border border-primary p-4 m-3 bg-light borderLeft">
+      <div class="border border-primary border-3 p-4 m-3 bg-light borderLeft">
         {% if ticket.user_id == request.user.id %}
         <p>Vous avez demandé une critique</p>
         {% else %}
@@ -102,16 +99,14 @@
         >
         <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
-        <div class="border border-primary p-4 m-3">
-          {% if ticket.image.url %}
-          <img src="{{ ticket.image.url }}" width="100px" />
-          {% else %}
-          <p></p>
-          {% endif %}
-          <p>{{ ticket.description }}</p>
-        </div>
+        {% if ticket.image.url %}
+        <img src="{{ ticket.image.url }}" width="100px" />
+
+        {% endif %}
+        <p>{{ ticket.description }}</p>
+
         <div class="text-end">
-          <button class="btn btn-warning">
+          <button class="btn btn-outline-success">
             <a
               href="../create_new_review_for_ticket/{{ticket.id}}"
               style="color: inherit; text-decoration: none"
