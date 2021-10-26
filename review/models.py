@@ -31,13 +31,13 @@ class Review(models.Model):
         default=timezone.now)
 
 
-# class UserFollows(models.Model):
-    # user = models.ForeignKey(
-    # to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following")
-    # followed_user = models.ManyToManyField(
-    # to=settings.AUTH_USER_MODEL, related_name="followed_by")
+class UserFollows(models.Model):
+    user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="following", null=True,)
+    followed_user = models.ForeignKey(
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="followed_by", null=True,)
 
-    # class Meta:
-    # ensures we don't get multiple UserFollows instances
-    # for unique user-user_followed pairs
-    #unique_together = ('user', 'followed_user')
+    class Meta:
+        # ensures we don't get multiple UserFollows instances
+        # for unique user-user_followed pairs
+        unique_together = ('user', 'followed_user')

@@ -5,7 +5,7 @@ from django.conf import settings
 
 from . import forms
 from . import models
-from django.contrib.auth.models import User
+from authentication import models as auth_models
 
 import review
 
@@ -66,10 +66,50 @@ def create_new_review(request):
 
 @login_required
 def follow(request):
-    return render(request, 'review/follow.html')
+    all_followed = models.UserFollows.objects.filter(user=request.user.id)
+    all_followed_id = [followed.followed_user_id for followed in all_followed]
+    all_followed_id.append(request.user.id)
+    all_users_to_be_followed = auth_models.User.objects.all().exclude(
+        id__in=all_followed_id)
+    user_form = forms.UserFollowsForm()
+    remove_user_followed_form = forms.UserRemoveFollowsForm()
+    user_followed_by_request_user = models.UserFollows.objects.filter(
+        user=request.user.id)
+    request_user_followed_by_other = models.UserFollows.objects.filter(
+        followed_user=request.user.id)
+    context = {"user_form": user_form, "remove_user_followed_form": remove_user_followed_form, "all_users_to_be_followed": all_users_to_be_followed,
+               "user_followed_by_request_user": user_followed_by_request_user, "request_user_followed_by_other": request_user_followed_by_other}
+
+    if request.method == 'POST':
+        user_form = forms.UserFollowsForm(request.POST)
+        remove_user_followed_form = forms.UserRemoveFollowsForm(request.POST)
+        print(request.POST)
+        print(remove_user_followed_form.is_valid())
+        if user_form.is_valid():
+            user_form.save(commit=False)
+            try:
+                follow = models.UserFollows.objects.filter(
+                    user_id=request.user.id, followed_user=request.POST.get("user")[0])
+                if not follow:
+                    follow = models.UserFollows.objects.create()
+                    follow.user_id = request.user.id
+                    follow.followed_user_id = str(request.POST.get("user")[0])
+                    follow.save()
+            except:
+                pass
+        if request.POST.get("user_followed_to_delete"):
+            try:
+
+                followed = models.UserFollows.objects.filter(
+                    user_id=request.user.id, followed_user=request.POST.get("user_followed_to_delete")[0])
+                followed.delete()
+            except:
+                pass
+        return redirect("review:follow")
+    return render(request, 'review/follow.html', context=context)
 
 
-@login_required
+@ login_required
 def flux(request):
     tickets = models.Ticket.objects.all().order_by('-time_created')
     reviews = models.Review.objects.all().order_by('-time_created')
@@ -82,7 +122,7 @@ def flux(request):
     return render(request, 'review/flux.html', context={"tickets": tickets, "reviews": reviews})
 
 
-@login_required
+@ login_required
 def posts(request):
     my_tickets = models.Ticket.objects.filter(
         user_id=request.user.id).order_by('-time_created')
@@ -100,7 +140,7 @@ def posts(request):
 # GESTION TICKETS
 
 
-@login_required
+@ login_required
 def modify_ticket(request, number_ticket):
     tickets = get_object_or_404(models.Ticket, id=number_ticket)
     if request.user.id == tickets.user_id:
@@ -120,7 +160,7 @@ def modify_ticket(request, number_ticket):
     return render(request, 'review/modify_ticket.html', context=context)
 
 
-@login_required
+@ login_required
 def read_ticket(request, number_ticket):
     try:
         ticket = get_object_or_404(models.Ticket, id=number_ticket)
@@ -139,7 +179,7 @@ def read_ticket(request, number_ticket):
     return render(request, 'review/read_ticket.html', context=context)
 
 
-@login_required
+@ login_required
 def delete_ticket(request, number_ticket):
     try:
         ticket = get_object_or_404(models.Ticket, id=number_ticket)
@@ -169,7 +209,7 @@ def delete_ticket(request, number_ticket):
 # GESTION REVIEW
 
 
-@login_required
+@ login_required
 def modify_review(request, number_review):
     reviews = get_object_or_404(models.Review, id=number_review)
     ticket = get_object_or_404(models.Ticket, id=reviews.ticket_id)
@@ -190,7 +230,7 @@ def modify_review(request, number_review):
     return render(request, 'review/modify_review.html', context=context)
 
 
-@login_required
+@ login_required
 def delete_review(request, number_review):
     review = get_object_or_404(models.Review, id=number_review)
     ticket = get_object_or_404(models.Ticket, id=review.ticket_id)

@@ -17,9 +17,77 @@
     </div>
     <div class="borderLeft m-4">
       <h2 class="text-center">Suivre d'autres utilisateurs</h2>
+      <hr />
+      <div>
+        {% if form.errors %} {{ form.errors }} {% endif %}
+        <form method="post">
+          {% csrf_token %}
+          <div
+            class="row d-flew flew-row m-4 justify-content-around align-middle"
+          >
+            <div class="col-5">
+              <label for="id_user">Utilisateurs à suivre :</label
+              ><select name="user" required id="id_user">
+                <option value="" selection>------------</option>
+                {% for user in all_users_to_be_followed %}
+                <option value="{{user.id}}">{{user.username}}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-5">
+              <button class="btn btn-outline-success" type="submit">
+                Suivre
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="borderLeft m-4"><h2 class="text-center">Abonnements</h2></div>
-    <div class="borderLeft m-4"><h2 class="text-center">Abonnés</h2></div>
+    <div class="borderLeft m-4">
+      <h2 class="text-center">Abonnements</h2>
+      <hr />
+
+      <form method="post">
+        {% csrf_token %}
+        <ul>
+          {% for user in user_followed_by_request_user %}
+          <div
+            class="
+              col
+              border border-primary border-2
+              m-2
+              p-2
+              d-flex
+              flex-row
+              justify-content-between
+              align-middle
+            "
+          >
+            <div class="p-2 text-left">{{user.followed_user.username}}</div>
+            <div class="text-end">
+              <button
+                class="btn btn-outline-danger"
+                name="user_followed_to_delete"
+                value="{{user.followed_user.id}}"
+                type="submit"
+              >
+                Se désabonner
+              </button>
+            </div>
+          </div>
+          {% endfor %}
+        </ul>
+      </form>
+    </div>
+    <div class="borderLeft m-4">
+      <h2 class="text-center">Abonnés</h2>
+      <hr />
+      <ul>
+        {% for user in request_user_followed_by_other %}
+        <li>{{user.user.username}}</li>
+        {% endfor %}
+      </ul>
+    </div>
   </div>
 </div>
 

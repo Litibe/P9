@@ -14,3 +14,15 @@ class ReviewForm(forms.ModelForm):
     class Meta:
         model = models_review.Review
         fields = ["headline", 'rating', 'body']
+
+
+class UserFollowsForm(forms.ModelForm):
+    class Meta:
+        model = models_review.UserFollows
+        fields = ["user"]
+
+
+class UserRemoveFollowsForm(forms.ModelForm):
+    class Meta:
+        model = models_review.UserFollows
+        fields = ["user"]
