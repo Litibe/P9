@@ -6,7 +6,7 @@
   <p>{{ticket.user}} a publié un ticket</p>
   {% endif%}
   <a
-    href="../ticket/{{ ticket.id }}"
+    href="{% url 'review:read_ticket' ticket.id %}"
     style="color: inherit; text-decoration: none"
   >
     <h3 class="text-primary">
@@ -16,20 +16,20 @@
   <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
   <p>{{ ticket.description }}</p>
-  {% if ticket.image.url %}
+  {% if ticket.image %}
   <img src="{{ ticket.image.url }}" width="100px" />
   {% endif %} {% if request.user.id == ticket.user_id%}
   <div class="text-end">
     <button class="btn btn-outline-primary">
       <a
-        href="../modify_ticket/{{ticket.id}}"
+        href="{% url 'review:modify_ticket' ticket.id %}"
         style="color: inherit; text-decoration: none"
         >Modifier
       </a>
     </button>
     <button class="btn btn-outline-danger">
       <a
-        href="../delete_ticket/{{ticket.id}}"
+        href="{% url 'review:delete_ticket' ticket.id %}"
         style="color: inherit; text-decoration: none"
         >Supprimer
       </a>

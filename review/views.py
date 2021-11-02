@@ -161,20 +161,23 @@ def posts(request):
 
 @ login_required
 def modify_ticket(request, number_ticket):
+    context = {"number_ticket": number_ticket}
     tickets = get_object_or_404(models.Ticket, id=number_ticket)
     if request.user.id == tickets.user_id:
-        form = forms.TicketForm(instance=tickets)
+        form = forms.TicketForm()
+        context["form"] = form
+        picture = forms.ModifPicture(instance=tickets)
+        context["picture"] = picture
+        context["tickets"] = tickets
         if request.method == 'POST':
-            form = forms.TicketForm(
-                request.POST, request.FILES, instance=tickets)
-            if form.is_valid():
-                ticket = form.save(commit=False)
-                ticket.save()
-                return redirect('review:posts')
-        context = {"form": form, "tickets": tickets,
-                   "number_ticket": number_ticket}
-    else:
-        context = {"number_ticket": number_ticket}
+            tickets.title = request.POST.get("title", "")
+            tickets.description = request.POST.get("description", "")
+            tickets.save()
+
+            picture = forms.ModifPicture(request.POST, request.FILES)
+            if all([picture.is_valid()]):
+                picture.save()
+            return redirect('review:posts')
 
     return render(request, 'review/modify_ticket.html', context=context)
 

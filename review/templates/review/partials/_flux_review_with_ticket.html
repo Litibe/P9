@@ -22,7 +22,7 @@
 
   <div class="border border-primary border-4 p-4 m-3">
     <a
-      href="../ticket/{{ ticket.id }}"
+      href="{% url 'review:read_ticket' ticket.id %}"
       style="color: inherit; text-decoration: none"
     >
       <h3 class="text-primary">
@@ -35,7 +35,7 @@
     <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
     <p>{{ ticket.description }}</p>
-    {% if ticket.image.url %}
+    {% if ticket.image %}
     <img src="{{ ticket.image.url }}" width="100px" />
     {% endif %}
   </div>
@@ -43,14 +43,14 @@
   <div class="text-end">
     <button class="btn btn-outline-success">
       <a
-        href="../modify_review/{{ticket.review.id}}"
+        href="{% url 'review:modify_ticket' ticket.id %}"
         style="color: inherit; text-decoration: none"
         >Modifier
       </a>
     </button>
     <button class="btn btn-outline-danger">
       <a
-        href="../delete_review/{{ticket.review.id}}"
+        href="{% url 'review:delete_ticket' ticket.id %}"
         style="color: inherit; text-decoration: none"
         >Supprimer
       </a>

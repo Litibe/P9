@@ -10,6 +10,12 @@ class TicketForm(forms.ModelForm):
         fields = ['title', 'description', 'image']
 
 
+class ModifPicture(forms.ModelForm):
+    class Meta:
+        model = models_review.Ticket
+        fields = ['image']
+
+
 class ReviewForm(forms.ModelForm):
     class Meta:
         model = models_review.Review
