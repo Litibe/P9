@@ -23,12 +23,21 @@
       <div class="col-12 col-md-10 col-lg-8 borderLeft">
         {% if tickets%}
         <h2 class="text-center m-3">Merci de remplir les champs requis, svp</h2>
-        {% else %}
+        {% endif %} {% if request.user.id != tickets.user_id %}
         <h2 class="text-center m-3">
           Vous n'etes pas le créateur du Ticket,<br />
           vous ne pouvez pas le modifier !
         </h2>
-        {% endif %}
+        <div class="text-center">
+          <button class="btn btn-outline-danger">
+            <a
+              href="{% url 'review:posts' %}"
+              style="color: inherit; text-decoration: none"
+              >Retour</a
+            >
+          </button>
+        </div>
+        {% else %}
         <div class="m-auto p-3">
           {% if form.errors %} {{ form.errors }} {% endif %}
           <form method="post" enctype="multipart/form-data">
@@ -103,7 +112,7 @@
               {% endif %}
             </div>
           </form>
-          <div class="text-center"></div>
+          {% endif %}
         </div>
       </div>
     </div>

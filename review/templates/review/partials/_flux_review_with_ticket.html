@@ -43,14 +43,14 @@
   <div class="text-end">
     <button class="btn btn-outline-success">
       <a
-        href="{% url 'review:modify_ticket' ticket.id %}"
+        href="{% url 'review:modify_review' ticket.review.id %}"
         style="color: inherit; text-decoration: none"
         >Modifier
       </a>
     </button>
     <button class="btn btn-outline-danger">
       <a
-        href="{% url 'review:delete_ticket' ticket.id %}"
+        href="{% url 'review:delete_review' ticket.review.id %}"
         style="color: inherit; text-decoration: none"
         >Supprimer
       </a>

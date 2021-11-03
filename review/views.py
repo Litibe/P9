@@ -184,47 +184,34 @@ def modify_ticket(request, number_ticket):
 
 @ login_required
 def read_ticket(request, number_ticket):
-    try:
-        ticket = get_object_or_404(models.Ticket, id=number_ticket)
-        context = {"ticket": ticket, "number_ticket": number_ticket}
-        try:
-            review = get_object_or_404(
-                models.Review, ticket_id=number_ticket)
-            ticket.review = review
-            context = {"ticket": ticket,
-                       "number_ticket": number_ticket, "review": review}
-        except:
-            pass
-    except:
-        context = {"number_ticket": number_ticket}
-
+    ticket = get_object_or_404(models.Ticket, id=number_ticket)
+    context = {"ticket": ticket, "number_ticket": number_ticket}
+    review = models.Review.objects.filter(ticket_id=number_ticket)
+    if review:
+        ticket.review = review[0]
+        context["review"] = review[0]
     return render(request, 'review/read_ticket.html', context=context)
 
 
 @ login_required
 def delete_ticket(request, number_ticket):
-    try:
-        ticket = get_object_or_404(models.Ticket, id=number_ticket)
-        context = {"ticket": ticket, "number_ticket": number_ticket}
-        try:
-            review = get_object_or_404(
-                models.Review, ticket_id=number_ticket)
-            ticket.review = review
-            context = {"ticket": ticket,
-                       "number_ticket": number_ticket, "review": review}
-        except:
-            pass
-    except:
-        context = {"number_ticket": number_ticket}
+    context = {"number_ticket": number_ticket}
+    ticket = get_object_or_404(models.Ticket, id=number_ticket)
+    if ticket:
+        context["ticket"] = ticket
+    review = models.Review.objects.filter(ticket_id=number_ticket)
+    if review:
+        ticket.review = review[0]
+        context["review"] = review
+
     if request.method == 'POST':
-        try:
-            review = get_object_or_404(models.Review, ticket_id=number_ticket)
+        review = get_object_or_404(models.Review, ticket_id=number_ticket)
+        if review:
             review.delete()
-        except:
-            pass
         ticket = get_object_or_404(
             models.Ticket, id=number_ticket)
-        ticket.delete()
+        if ticket:
+            ticket.delete()
         return redirect("review:posts")
     return render(request, 'review/delete_ticket.html', context=context)
 
