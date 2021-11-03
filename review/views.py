@@ -20,7 +20,8 @@ def create_new_ticket(request):
             ticket.user = request.user
             ticket.save()
             return redirect('review:flux')
-    return render(request, 'review/create_new_ticket.html', context={'form': form})
+    context = {'form': form}
+    return render(request, 'review/create_new_ticket.html', context)
 
 
 @login_required
@@ -53,10 +54,10 @@ def create_new_review_for_ticket(request, number_ticket):
             review = form.save(commit=False)
             review.ticket = models.Ticket.objects.get(id=number_ticket)
             review.user = request.user
-            # now we can save
             review.save()
             return redirect('review:flux')
-    return render(request, 'review/create_new_review.html', context={'form': form, "tickets": tickets})
+    context = {'form': form, "tickets": tickets}
+    return render(request, 'review/create_new_review.html', context)
 
 
 @login_required
@@ -105,7 +106,7 @@ def follow(request):
             except:
                 pass
         return redirect("review:follow")
-    return render(request, 'review/follow.html', context=context)
+    return render(request, 'review/follow.html', context)
 
 
 @ login_required
@@ -138,7 +139,8 @@ def flux(request):
         for review in reviews:
             if review.ticket_id == ticket.id:
                 ticket.review = review
-    return render(request, 'review/flux.html', context={"tickets": all_ticket, "reviews": reviews})
+    context = {"tickets": all_ticket, "reviews": reviews}
+    return render(request, 'review/flux.html', context)
 
 
 @ login_required
@@ -154,8 +156,9 @@ def posts(request):
         for review in reviews:
             if review.ticket_id == ticket.id:
                 ticket.review = review
-
-    return render(request, 'review/posts.html', context={"tickets": tickets, "reviews": reviews, "my_tickets": my_tickets})
+    context = {"tickets": tickets,
+               "reviews": reviews, "my_tickets": my_tickets}
+    return render(request, 'review/posts.html', context)
 # GESTION TICKETS
 
 
@@ -179,7 +182,7 @@ def modify_ticket(request, number_ticket):
                 picture.save()
             return redirect('review:posts')
 
-    return render(request, 'review/modify_ticket.html', context=context)
+    return render(request, 'review/modify_ticket.html', context)
 
 
 @ login_required
@@ -190,7 +193,7 @@ def read_ticket(request, number_ticket):
     if review:
         ticket.review = review[0]
         context["review"] = review[0]
-    return render(request, 'review/read_ticket.html', context=context)
+    return render(request, 'review/read_ticket.html', context)
 
 
 @ login_required
@@ -213,7 +216,7 @@ def delete_ticket(request, number_ticket):
         if ticket:
             ticket.delete()
         return redirect("review:posts")
-    return render(request, 'review/delete_ticket.html', context=context)
+    return render(request, 'review/delete_ticket.html', context)
 
 
 # GESTION REVIEW
@@ -221,6 +224,7 @@ def delete_ticket(request, number_ticket):
 
 @ login_required
 def modify_review(request, number_review):
+    context = {"number_review": number_review}
     reviews = get_object_or_404(models.Review, id=number_review)
     ticket = get_object_or_404(models.Ticket, id=reviews.ticket_id)
     if request.user.id == reviews.user_id:
@@ -232,12 +236,13 @@ def modify_review(request, number_review):
                 review = form.save(commit=False)
                 review.save()
                 return redirect('review:flux')
-        context = {"form": form, "reviews": reviews,
-                   "number_review": number_review, "ticket": ticket}
-    else:
-        context = {"number_review": number_review}
+        context["form"] = form
+        if ticket:
+            context["ticket"] = ticket
+        if reviews:
+            context["reviews"] = reviews
 
-    return render(request, 'review/modify_review.html', context=context)
+    return render(request, 'review/modify_review.html', context)
 
 
 @ login_required
@@ -249,4 +254,5 @@ def delete_review(request, number_review):
         review = get_object_or_404(models.Review, id=number_review)
         review.delete()
         return redirect("review:posts")
-    return render(request, 'review/delete_review.html', context={"review": review, "ticket": ticket})
+    context = {"review": review, "ticket": ticket}
+    return render(request, 'review/delete_review.html', context)
