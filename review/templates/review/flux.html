@@ -77,7 +77,7 @@
           <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
           {% if ticket.image %}
-          <img src="{{ ticket.image.url }}" width="100px" />
+          <img src="{% get_media_prefix %}{{ ticket.image}}" width="100px" />
           {% endif %}
           <p>{{ ticket.description }}</p>
         </div>
@@ -100,7 +100,7 @@
         <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
         {% if ticket.image%}
-        <img src="{{ ticket.image.url }}" width="100px" />
+        <img src="{% get_media_prefix %}{{ ticket.image}}" width="100px" />
 
         {% endif %}
         <p>{{ ticket.description }}</p>

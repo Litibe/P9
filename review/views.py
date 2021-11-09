@@ -167,19 +167,24 @@ def modify_ticket(request, number_ticket):
     context = {"number_ticket": number_ticket}
     tickets = get_object_or_404(models.Ticket, id=number_ticket)
     if request.user.id == tickets.user_id:
-        form = forms.TicketForm()
+        form = forms.ModifTicketTitleDescription(instance=tickets)
         context["form"] = form
         picture = forms.ModifPicture(instance=tickets)
         context["picture"] = picture
         context["tickets"] = tickets
         if request.method == 'POST':
+            form = forms.ModifTicketTitleDescription(
+                request.POST)
+            new_tickets = form.save(commit=False)
             tickets.title = request.POST.get("title", "")
             tickets.description = request.POST.get("description", "")
             tickets.save()
 
             picture = forms.ModifPicture(request.POST, request.FILES)
             if all([picture.is_valid()]):
-                picture.save()
+                new_picture = picture.save(commit=False)
+                tickets.image = new_picture.image
+                tickets.save()
             return redirect('review:posts')
 
     return render(request, 'review/modify_ticket.html', context)
@@ -208,9 +213,6 @@ def delete_ticket(request, number_ticket):
         context["review"] = review
 
     if request.method == 'POST':
-        review = get_object_or_404(models.Review, ticket_id=number_ticket)
-        if review:
-            review.delete()
         ticket = get_object_or_404(
             models.Ticket, id=number_ticket)
         if ticket:

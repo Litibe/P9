@@ -73,29 +73,16 @@
             </div>
 
             <div class="form-group m-2 p-2">
-              <p>Image Actuelle : {{tickets.image}}</p>
+              {% if tickets.image %}
+              <p>Image Actuelle :</p>
               <img
                 src="{% get_media_prefix %}{{tickets.image}}"
                 alt="{{tickets.title}}"
+                width="300px"
               />
               <br />
-              <label for="id_image">Modifier l'image de l'Ouvrage : </label>
-              <input
-                type="file"
-                name="image"
-                accept="image/*"
-                id="id_image"
-                aria-describedby="imageHelp"
-                value="{{tickets.image}}"
-              /><br />
-              <small id="imageHelp" class="form-text text-muted"
-                >Vous pouvez importer une image de l'ouvrage pour une meilleure
-                reconnaissance pour les autres utilisateurs<br />
-                Attention, seuls les fichiers de type "images" sont autorisés
-                !</small
-              >
+              {% endif %} {{picture.as_p}}
             </div>
-            {{picture.as_p}}
 
             <div class="text-center">
               <button class="btn btn-outline-danger">
