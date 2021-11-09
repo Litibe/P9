@@ -36,7 +36,7 @@
 
     <p>{{ ticket.description }}</p>
     {% if ticket.image %}
-    <img src="{{ ticket.image.url }}" width="100px" />
+    <img src="{{ ticket.image.url }}" width="200px" />
     {% endif %}
   </div>
   {% if request.user.id == ticket.review.user_id%}
