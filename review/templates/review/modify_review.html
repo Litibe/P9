@@ -35,16 +35,16 @@
         {%endif%} {% if reviews%}
         <h2 class="text-center m-3">Merci de remplir les champs requis, svp</h2>
         {% else %}
-        <h2 class="text-center m-3">
+        <h3 class="text-center m-3">
           Vous n'etes pas le créateur de la critique,<br />
           vous ne pouvez pas la modifier !
-        </h2>
+        </h3>
         {% endif %}
         <div class="m-auto p-3">
           {% if form.errors %} {{ form.errors }} {% endif %}
           <form method="post" enctype="multipart/form-data">
             {% csrf_token %}{{ form.as_p }}
-
+            
             <div class="text-center">
               
               {% if reviews%}
@@ -54,15 +54,17 @@
               {%endif%}
             </div>
           </form>
+           {% if not reviews%}
           <div class="text-center">
-              <button class="btn btn-outline-danger" type="submit">
+              <button class="btn btn-outline-danger" >
                 <a
                   href="javascript:history.back()"
                   style="color: inherit; text-decoration: none"
                   >Retour</a
                 >
               </button>
-            </div>
+          </div>
+            {% endif %}
         </div>
       </div>
     </div>

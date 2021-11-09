@@ -233,7 +233,7 @@ def modify_review(request, number_review):
         form = forms.ReviewForm(instance=reviews)
         if request.method == 'POST':
             form = forms.ReviewForm(
-                request.POST, request.FILES, instance=reviews)
+                request.POST, instance=reviews)
             if form.is_valid():
                 review = form.save(commit=False)
                 review.save()
