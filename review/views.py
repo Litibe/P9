@@ -2,12 +2,11 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.conf import settings
+from django.db.models import Q
 
 from . import forms
 from . import models
 from authentication import models as auth_models
-
-import review
 
 
 @login_required
@@ -129,7 +128,6 @@ def flux(request):
                 if review.ticket_id == ticket.id:
                     ticket.review = review
                     all_ticket.append(ticket)
-                    print("append")
     all_ticket_id = [ticket.id for ticket in all_ticket]
     all_ticket_id.sort()
     all_tickets = models.Ticket.objects.filter(

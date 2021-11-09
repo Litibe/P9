@@ -6,7 +6,7 @@ from PIL import Image
 
 class User(AbstractUser):
     profile_photo = models.ImageField(
-        upload_to=settings.MEDIA_ROOT.joinpath('profile/'), verbose_name='Photo de profil')
+        verbose_name='Photo de profil', null=True)
 
     IMAGE_MAX_SIZE = (300, 300)
 
