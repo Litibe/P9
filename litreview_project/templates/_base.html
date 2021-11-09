@@ -2,6 +2,14 @@
 <html lang="fr">
   <head>
     {% load static %}
+    <link
+      rel="shortcut icon"
+      href="{%  static 'litreview_project/img/favicon.ico' %}"
+    />
+    <link
+      rel="apple-touch-icon"
+      href="{%  static 'litreview_project/img/favicon.ico' %}"
+    />
     <!-- Required meta tags -->
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -30,7 +38,10 @@
         background-size: cover;
       }
     </style>
-    {% include "partials/_header.html" %} {% block main_content %} {% endblock %}
+    {% include "partials/_header.html" %}
+    <!--Insert block-->
+    {% block main_content %} {% endblock %}
+    <!--Insert footer-->
     {% include "partials/_footer.html" %}
 
     <script

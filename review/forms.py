@@ -34,6 +34,12 @@ class ModifPicture(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
+
+    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(
+        {"class": "form-control", "placeholder": "Mettez le titre de votre critique"}))
+    body = forms.CharField(label="Votre critique", widget=forms.Textarea(
+        {"class": "form-control", "placeholder": "Mettez le détails de votre critique"}))
+
     class Meta:
         model = models_review.Review
         fields = ["headline", 'rating', 'body']

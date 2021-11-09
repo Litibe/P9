@@ -10,9 +10,9 @@
     background-size: cover;
   }
 </style>
-<div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle bg-light">
+<div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle">
   <div class="row">
-    <div class="text-center shadow-lg">
+    <div class="text-center">
       <h1>LITReview - Creation d'une Critique</h1>
     </div>
   </div>
@@ -20,9 +20,9 @@
 
 <div class="container mb-5">
   <div class="row d-flex flex-row justify-content-center">
-    <div class="m-3 p-5 bg-light border border-warning">
+    <div class="m-3 p-3 bg-light border border-warning">
       <h2>Vous êtes en train de poster en réponse à</h2>
-      <div class="m-3 p-5 bg-light border border-success">
+      <div class="m-3 p-2 bg-light border border-success">
         {% for ticket in tickets %}
         <div>
           <p>{{ticket.user}} a demandé une critique</p>
@@ -33,7 +33,7 @@
 
           <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
-          <div class="border border-warning p-4 m-3">
+          <div class="border border-warning p-2 m-3">
             {% if ticket.image %}
             <img src="{{ ticket.image.url }}" width="100px" />
             {% endif %}
@@ -139,13 +139,11 @@
           <div class="form-group m-2 p-2">
             <label for="id_description">Commentaire : </label><br />
             <textarea
+              class="form-control"
               name="description"
-              cols="80"
-              rows="5"
               maxlength="2048"
               id="id_description"
               placeholder="Explicitez votre critique..."
-              required
             ></textarea>
             <br />
           </div>
