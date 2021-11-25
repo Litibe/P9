@@ -49,17 +49,23 @@
   <div class="row my-3 d-flex justify-content-around">
     <div class="">
       {% for ticket in tickets %}
+
       <!--if critique associé au ticket-->
-      {% if ticket.review %}
-       {% if ticket.review.user_id == request.user.id %}
+      {% if ticket.id in reviews_link_tickets%} 
+      
+      {% for review in reviews%}
       <!---->
-      {% include "review/partials/_flux_review_with_ticket.html" %}<!---->
-       {% if ticket.user_id == request.user.id %}
-      {% include "review/partials/_flux_ticket_only.html" %}{% endif %}{% endif %}
-      <!---->{% else %} <!---->
+      {% if ticket.id == review.ticket_id %}
+      <!---->
+      {% include "review/partials/_post_review_with_ticket.html" %}<!---->
+      {% endif %}{% endfor%}
+      {% else %} <!---->
       {% if ticket.user_id == request.user.id %}
-      {% include "review/partials/_flux_ticket_without_review.html" %}{% endif %}
-      <!---->{% endif %} {% endfor%}
+      {% include "review/partials/_post_ticket_without_review.html" %}{% endif %}
+      <!---->{% endif %}
+
+      
+      <!---->{% endfor%}
     </div>
   </div>
 </div>

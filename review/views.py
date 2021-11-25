@@ -118,19 +118,16 @@ def flux(request):
 
 @ login_required
 def posts(request):
-    my_tickets = models.Ticket.objects.filter(
-        user_id=request.user.id).order_by('-time_created')
-
-    tickets = models.Ticket.objects.all().order_by('-time_created')
     reviews = models.Review.objects.filter(
-        user_id=request.user.id).order_by('-time_created')
-    tickets = [ticket for ticket in tickets]
-    for ticket in tickets:
-        for review in reviews:
-            if review.ticket_id == ticket.id:
-                ticket.review = review
-    context = {"tickets": tickets,
-               "reviews": reviews, "my_tickets": my_tickets}
+        user_id=request.user.id).values()
+    reviews_link_tickets = models.Review.objects.filter(
+        user_id=request.user.id).values_list('ticket_id', flat=True)
+    tickets = models.Ticket.objects.filter(
+        user_id=request.user.id) | models.Ticket.objects.filter(id__in=reviews_link_tickets)
+    tickets = tickets.order_by("-id")
+    context = {"tickets": tickets, "reviews": reviews,
+               "reviews_link_tickets": reviews_link_tickets}
+    print(context)
     return render(request, 'review/posts.html', context)
 # GESTION TICKETS
 
@@ -148,7 +145,6 @@ def modify_ticket(request, number_ticket):
         if request.method == 'POST':
             form = forms.ModifTicketTitleDescription(
                 request.POST)
-            new_tickets = form.save(commit=False)
             tickets.title = request.POST.get("title", "")
             tickets.description = request.POST.get("description", "")
             tickets.save()
