@@ -63,8 +63,8 @@ def create_new_review(request):
 
 @login_required
 def follow(request):
-    all_followed = models.UserFollows.objects.filter(user=request.user.id)
-    all_followed_id = [followed.followed_user_id for followed in all_followed]
+    all_followed_id = list(models.UserFollows.objects.filter(
+        user=request.user.id).values_list('followed_user_id', flat=True))
     all_followed_id.append(request.user.id)
     all_users_to_be_followed = auth_models.User.objects.all().exclude(
         id__in=all_followed_id)
@@ -80,27 +80,19 @@ def follow(request):
     if request.method == 'POST':
         user_form = forms.UserFollowsForm(request.POST)
         remove_user_followed_form = forms.UserRemoveFollowsForm(request.POST)
-
         if user_form.is_valid():
-            user_form.save(commit=False)
-            try:
-                follow = models.UserFollows.objects.filter(
-                    user_id=request.user.id, followed_user=request.POST.get("user")[0])
-                if not follow:
-                    follow = models.UserFollows.objects.create()
-                    follow.user_id = request.user.id
-                    follow.followed_user_id = str(request.POST.get("user")[0])
-                    follow.save()
-            except:
-                pass
-        if request.POST.get("user_followed_to_delete"):
-            try:
+            follow = models.UserFollows.objects.filter(
+                user_id=request.user.id, followed_user=request.POST.get("user")[0])
+            if not follow:
+                follow = models.UserFollows.objects.create()
+                follow.user_id = request.user.id
+                follow.followed_user_id = str(request.POST.get("user")[0])
+                follow.save()
 
-                followed = models.UserFollows.objects.filter(
-                    user_id=request.user.id, followed_user=request.POST.get("user_followed_to_delete")[0])
-                followed.delete()
-            except:
-                pass
+        if request.POST.get("user_followed_to_delete"):
+            followed = models.UserFollows.objects.filter(
+                user_id=request.user.id, followed_user=request.POST.get("user_followed_to_delete")[0])
+            followed.delete()
         return redirect("review:follow")
     return render(request, 'review/follow.html', context)
 
