@@ -45,7 +45,6 @@ def inscription(request):
 @login_required
 def user_picture(request):
     form = users_form.UserPictureForm(instance=request.user)
-
     if request.method == 'POST':
         form = users_form.UserPictureForm(
             request.POST, request.FILES, instance=request.user)

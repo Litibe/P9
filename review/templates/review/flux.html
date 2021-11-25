@@ -38,27 +38,31 @@
   <div class="row col-12 d-flex flex-row justify-content-around">
     <div class="col-sm-12 col-md-9 m-2 p-3">
       {% for ticket in tickets %}
+
       <!--if critique associé au ticket-->
-      {% if ticket.review %}
+      {% if ticket.id in reviews_link_tickets%} {% for review in reviews%}
+      <!---->
+      {% if ticket.id == review.ticket_id %}
       <div class="border border-success border-3 p-4 m-3 bg-light borderLeft">
-        {% if ticket.review.user_id == request.user.id %}
+        {% if review.user_id == request.user.id %}
         <p>Vous avez publié une critique</p>
         {% else %}
-        <p>{{ticket.review.user}} a publié une critique</p>
+        <p>{{review.user}} a publié une critique</p>
         {% endif%}
-        <p class="text-end">Date de demande : {{ticket.review.time_created}}</p>
+        <p class="text-end">Date de demande : {{review.time_created}}</p>
         <h3 class="text-success">
-          {{ ticket.review.headline }} - {% if ticket.review.rating == 0 %}
-          {%endif%}{% if ticket.review.rating == 1 %}⭐️{%endif%}
+          {{ review.headline }} - {% if review.rating == 0 %} {%endif%}<!---->
+          {% if review.rating == 1 %}⭐️{%endif%}
           <!---->
-          {% if ticket.review.rating == 2 %}⭐️⭐️{% endif%}
+          {% if review.rating == 2 %}⭐️⭐️{% endif%}
           <!---->
-          {% if ticket.review.rating == 3 %}⭐️⭐️⭐️{% endif%}
+          {% if review.rating == 3 %}⭐️⭐️⭐️{% endif%}
           <!---->
-          {% if ticket.review.rating == 4 %}⭐️⭐️⭐️⭐️{% endif%}<!---->
-          {% if ticket.review.rating == 5 %}⭐️⭐️⭐️⭐️⭐️{% endif%}
+          {% if review.rating == 4 %}⭐️⭐️⭐️⭐️{% endif%}<!---->
+          {% if review.rating == 5 %}⭐️⭐️⭐️⭐️⭐️{% endif%}
         </h3>
-        <p>{{ticket.review.body}}</p>
+        <p>{{review.body}}</p>
+        {% endif%}{% endfor%}
 
         <div class="border border-primary border-3 p-4 m-3">
           {% if ticket.user_id == request.user.id %}

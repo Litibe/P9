@@ -2,10 +2,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.conf import settings
-from django.db.models import Q
-
-from . import forms
-from . import models
+from . import forms, models
 from authentication import models as auth_models
 
 
@@ -110,35 +107,21 @@ def follow(request):
 
 @ login_required
 def flux(request):
-    all_followed = models.UserFollows.objects.filter(user=request.user.id)
-    all_followed_id = [followed.followed_user_id for followed in all_followed]
-    all_followed_id.append(request.user.id)
+    all_followed = models.UserFollows.objects.filter(
+        user_id=request.user.id).values_list('followed_user_id', flat=True)
+    all_followed = list(all_followed)
+    all_followed.append(request.user.id)
 
-    all_tickets = models.Ticket.objects.all().order_by('-time_created')
-    tickets = models.Ticket.objects.all().order_by(
-        '-time_created').filter(user_id__in=all_followed_id)
-    reviews = models.Review.objects.all().order_by(
-        '-time_created').filter(user_id__in=all_followed_id)
-    all_ticket = [ticket for ticket in tickets]
-    for ticket in all_tickets:
-        for review in reviews:
-            if review.user_id not in all_followed_id:
-                pass
-            else:
-                if review.ticket_id == ticket.id:
-                    ticket.review = review
-                    all_ticket.append(ticket)
-    all_ticket_id = [ticket.id for ticket in all_ticket]
-    all_ticket_id.sort()
-    all_tickets = models.Ticket.objects.filter(
-        id__in=all_ticket_id).order_by('-time_created')
-    all_ticket = [ticket for ticket in all_tickets]
-    for ticket in all_ticket:
-        for review in reviews:
-            if review.ticket_id == ticket.id:
-                ticket.review = review
-    context = {"tickets": all_ticket, "reviews": reviews}
-    return render(request, 'review/flux.html', context)
+    reviews = models.Review.objects.filter(
+        user_id__in=all_followed).values()
+    reviews_link_tickets = models.Review.objects.filter(
+        user_id__in=all_followed).values_list('ticket_id', flat=True)
+    tickets = models.Ticket.objects.filter(
+        user_id__in=all_followed) | models.Ticket.objects.filter(id__in=reviews_link_tickets)
+    tickets = tickets.order_by("-id")
+    context = {"tickets": tickets, "reviews": reviews,
+               "reviews_link_tickets": reviews_link_tickets}
+    return render(request, 'review/flux.html', context=context)
 
 
 @ login_required
