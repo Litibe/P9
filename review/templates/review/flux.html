@@ -41,7 +41,7 @@
 
       <!--if critique associé au ticket-->
       {% if ticket.id in reviews_link_tickets%} {% for review in reviews%}
-      <!---->
+      
       {% if ticket.id == review.ticket_id %}
       <div class="border border-success border-3 p-4 m-3 bg-light borderLeft">
         {% if review.user_id == request.user.id %}
@@ -51,14 +51,11 @@
         {% endif%}
         <p class="text-end">Date de demande : {{review.time_created}}</p>
         <h3 class="text-success">
-          {{ review.headline }} - {% if review.rating == 0 %} {%endif%}<!---->
+          {{ review.headline }} - {% if review.rating == 0 %} {%endif%}
           {% if review.rating == 1 %}⭐️{%endif%}
-          <!---->
           {% if review.rating == 2 %}⭐️⭐️{% endif%}
-          <!---->
           {% if review.rating == 3 %}⭐️⭐️⭐️{% endif%}
-          <!---->
-          {% if review.rating == 4 %}⭐️⭐️⭐️⭐️{% endif%}<!---->
+          {% if review.rating == 4 %}⭐️⭐️⭐️⭐️{% endif%}
           {% if review.rating == 5 %}⭐️⭐️⭐️⭐️⭐️{% endif%}
         </h3>
         <p>{{review.body}}</p>
