@@ -1,7 +1,10 @@
+import os
+
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.conf import settings
+
 from . import forms, models
 from authentication import models as auth_models
 
@@ -127,7 +130,6 @@ def posts(request):
     tickets = tickets.order_by("-id")
     context = {"tickets": tickets, "reviews": reviews,
                "reviews_link_tickets": reviews_link_tickets}
-    print(context)
     return render(request, 'review/posts.html', context)
 # GESTION TICKETS
 
