@@ -103,3 +103,5 @@ jean8597
 jean_5679
 sarahj
 severine123
+
+Possibilité de voir le serveur Django de test pour soutenance à l'adresse [http://193.26.22.227](http://193.26.22.227)
