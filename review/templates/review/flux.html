@@ -40,32 +40,34 @@
       {% for ticket in tickets %}
 
       <!--if critique associé au ticket-->
-      {% if ticket.id in reviews_link_tickets%} {% for review in reviews%}
-      
-      {% if ticket.id == review.ticket_id %}
+      {% if ticket.id in reviews_link_tickets%} 
+        {% for review in reviews%}
+          {% if ticket.id == review.ticket_id %}
       <div class="border border-success border-3 p-4 m-3 bg-light borderLeft">
-        {% if review.user_id == request.user.id %}
-        <p>Vous avez publié une critique</p>
-        {% else %}
-        <p>{{review.user}} a publié une critique</p>
-        {% endif%}
-        <p class="text-end">Date de demande : {{review.time_created}}</p>
-        <h3 class="text-success">
-          {{ review.headline }} - {% if review.rating == 0 %} {%endif%}
-          {% if review.rating == 1 %}⭐️{%endif%}
-          {% if review.rating == 2 %}⭐️⭐️{% endif%}
-          {% if review.rating == 3 %}⭐️⭐️⭐️{% endif%}
-          {% if review.rating == 4 %}⭐️⭐️⭐️⭐️{% endif%}
-          {% if review.rating == 5 %}⭐️⭐️⭐️⭐️⭐️{% endif%}
-        </h3>
-        <p>{{review.body}}</p>
-        {% endif%}{% endfor%}
+            {% if review.user_id == request.user.id %}
+              <p>Vous avez publié une critique</p>
+              {% else %}
+              <p>{{review.user}} a publié une critique</p>
+            {% endif %}
+            <p class="text-end">Date de demande : {{review.time_created}}</p>
+            <h3 class="text-success">
+              {{ review.headline }} - 
+              {% if review.rating == 0 %} 
+              {% elif review.rating == 1 %}⭐️
+              {% elif review.rating == 2 %}⭐️⭐️
+              {% elif review.rating == 3 %}⭐️⭐️⭐️
+              {% elif review.rating == 4 %}⭐️⭐️⭐️⭐️
+              {% elif review.rating == 5 %}⭐️⭐️⭐️⭐️⭐️{% endif %}
+            </h3>
+            <p>{{review.body}}</p>
+          {% endif %}
+        {% endfor %}
 
         <div class="border border-primary border-3 p-4 m-3">
           {% if ticket.user_id == request.user.id %}
-          <p>Vous avez demandé une critique</p>
-          {% else %}
-          <p>{{ticket.user}} a demandé une critique</p>
+            <p>Vous avez demandé une critique</p>
+            {% else %}
+            <p>{{ticket.user}} a demandé une critique</p>
           {% endif %}
           <a
             href="{% url 'review:read_ticket' ticket.id %}"
@@ -78,7 +80,7 @@
           <p class="text-end">Date de demande : {{ticket.time_created}}</p>
 
           {% if ticket.image %}
-          <img src="{% get_media_prefix %}{{ ticket.image}}" width="200px" />
+            <img src="{% get_media_prefix %}{{ ticket.image}}" width="200px" />
           {% endif %}
           <p>{{ ticket.description }}</p>
         </div>

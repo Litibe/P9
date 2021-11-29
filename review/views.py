@@ -48,11 +48,12 @@ def create_new_review_for_ticket(request, number_ticket):
     tickets = models.Ticket.objects.filter(id=number_ticket)
     form = forms.ReviewForm()
     if request.method == 'POST':
-        form = forms.ReviewForm(request.POST)
+        form = forms.ReviewForm(
+            request.POST)
         if form.is_valid():
             review = form.save(commit=False)
-            review.ticket = models.Ticket.objects.get(id=number_ticket)
-            review.user = request.user
+            review.user_id = request.user.id
+            review.ticket_id = number_ticket
             review.save()
             return redirect('review:flux')
     context = {'form': form, "tickets": tickets}
@@ -108,7 +109,7 @@ def flux(request):
     all_followed.append(request.user.id)
 
     reviews = models.Review.objects.filter(
-        user_id__in=all_followed).values()
+        user_id__in=all_followed)
     reviews_link_tickets = models.Review.objects.filter(
         user_id__in=all_followed).values_list('ticket_id', flat=True)
     tickets = models.Ticket.objects.filter(
@@ -206,8 +207,7 @@ def modify_review(request, number_review):
             form = forms.ReviewForm(
                 request.POST, instance=reviews)
             if form.is_valid():
-                review = form.save(commit=False)
-                review.save()
+                review = form.save()
                 return redirect('review:flux')
         context["form"] = form
         if ticket:

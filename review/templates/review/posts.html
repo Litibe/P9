@@ -1,46 +1,44 @@
 {% extends '_base.html' %} {% load static %}
-<!-- Page Home-->
-
 {% block main_content %}
-<style>
-  body {
-    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-</style>
+
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle">
   <div class="row">
     <div class="jumbotron text-center">
       <h1>LITReview - Mes Posts</h1>
       <p>Bonjour, {{user.username}} !</p>
       {% if user.profile_photo %}
-      
-        <img src="{% get_media_prefix %}{{user.profile_photo}}" width="150px" />
-        <div class=" text-center">
-      <button class="m-2 btn btn-outline-primary" type="submit">
-        <a
-          href="{% url 'authentication:user_picture' %}"
-          style="color: inherit; text-decoration: none"
-          >Modifier sa photo</a
-        >
-      </button>
-      </div>
+
+      <img src="{% get_media_prefix %}{{user.profile_photo}}" width="150px" />
+      <div class="text-center">
+        <button class="m-2 btn btn-outline-primary" type="submit">
+          <a
+            href="{% url 'authentication:user_picture' %}"
+            style="color: inherit; text-decoration: none"
+            >Modifier sa photo</a
+          >
+        </button>
       </div>
       {% else %}
       <p>Vous n'avez pas encore de photos de profil</p>
-    <div class=" text-center">
-      <button class="m-2  btn btn-outline-primary" type="submit">
-        <a
-          href="{% url 'authentication:user_picture' %}"
-          style="color: inherit; text-decoration: none"
-          >Ajouter sa photo</a
-        >
-      </button>
+      <div class="text-center">
+        <button class="m-2 btn btn-outline-primary" type="submit">
+          <a
+            href="{% url 'authentication:user_picture' %}"
+            style="color: inherit; text-decoration: none"
+            >Ajouter sa photo</a
+          >
+        </button>
       </div>
       {% endif %}
-      
+      <div class="text-center">
+        <button class="m-2 btn btn-outline-primary" type="submit">
+          <a
+            href="{% url 'authentication:password_modif' %}"
+            style="color: inherit; text-decoration: none"
+            >Modifier son mot de passe</a
+          >
+        </button>
+      </div>
     </div>
   </div>
 </div>
@@ -49,23 +47,18 @@
   <div class="row my-3 d-flex justify-content-around">
     <div class="">
       {% for ticket in tickets %}
-
-      <!--if critique associé au ticket-->
-      {% if ticket.id in reviews_link_tickets%} 
-      
-      {% for review in reviews%}
-      <!---->
-      {% if ticket.id == review.ticket_id %}
-      <!---->
-      {% include "review/partials/_post_review_with_ticket.html" %}<!---->
-      {% endif %}{% endfor%}
-      {% else %} <!---->
-      {% if ticket.user_id == request.user.id %}
-      {% include "review/partials/_post_ticket_without_review.html" %}{% endif %}
-      <!---->{% endif %}
-
-      
-      <!---->{% endfor%}
+        {% if ticket.id in reviews_link_tickets%} 
+          {% for review in reviews %}
+            {% if ticket.id == review.ticket_id %}
+              {% include "review/partials/_post_review_with_ticket.html" %}
+            {% endif %}
+          {% endfor %} 
+        {% else %}
+          {% if ticket.user_id == request.user.id %} 
+            {% include "review/partials/_post_ticket_without_review.html" %} 
+          {% endif %} 
+        {% endif %} 
+      {% endfor %}
     </div>
   </div>
 </div>

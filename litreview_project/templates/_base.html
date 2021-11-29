@@ -29,19 +29,14 @@
     <title>LITReview</title>
   </head>
 
-  <body>
-    <style>
-      body {
-        background-image: url("{% static 'litreview_project/img/background-2242685_1920.jpg' %}");
+  <body style='
+        background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
         background-attachment: fixed;
         background-repeat: no-repeat;
-        background-size: cover;
-      }
-    </style>
+        background-size: cover;'
+      >
     {% include "partials/_header.html" %}
-    <!--Insert block-->
     {% block main_content %} {% endblock %}
-    <!--Insert footer-->
     {% include "partials/_footer.html" %}
 
     <script

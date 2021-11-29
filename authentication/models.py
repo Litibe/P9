@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from django.conf import settings
 from PIL import Image
 
 
@@ -11,9 +10,10 @@ class User(AbstractUser):
     IMAGE_MAX_SIZE = (300, 300)
 
     def resize_image(self):
-        profile_photo = Image.open(self.profile_photo)
-        profile_photo.thumbnail(self.IMAGE_MAX_SIZE)
-        profile_photo.save(self.profile_photo.path)
+        if self.profile_photo:
+            profile_photo = Image.open(self.profile_photo)
+            profile_photo.thumbnail(self.IMAGE_MAX_SIZE)
+            profile_photo.save(self.profile_photo.path)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)

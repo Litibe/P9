@@ -1,15 +1,4 @@
-{% extends '_base.html' %} {% load static %}
-<!-- Page Home-->
-
-{% block main_content %}
-<style>
-  body {
-    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-</style>
+{% extends '_base.html' %} {% load static %} {% block main_content %}
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle">
   <div class="row">
     <div class="text-center">
@@ -55,99 +44,7 @@
         </div>
 
         <form method="post" enctype="multipart/form-data">
-          {% csrf_token %}
-          <div class="form-group m-2 p-2">
-            <label for="id_headline">Titre : </label>
-            <input
-              type="text"
-              name="headline"
-              maxlength="128"
-              id="id_headline"
-              placeholder="Votre titre de critique"
-              required
-            /><br />
-          </div>
-          <hr />
-
-          <div class="form-group m-2 p-2">
-            <label for="id_rating">Note :</label>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="rating"
-                id="rating0"
-                value="0"
-              />
-              <label class="form-check-label" for="rating0">- 0</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="rating"
-                id="rating1"
-                value="1"
-              />
-              <label class="form-check-label" for="rating1">- 1</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="rating"
-                id="rating2"
-                value="2"
-              />
-              <label class="form-check-label" for="rating2">- 2</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="rating"
-                id="rating3"
-                value="3"
-              />
-              <label class="form-check-label" for="rating3">- 3</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="rating"
-                id="rating4"
-                value="4"
-              />
-              <label class="form-check-label" for="rating4">- 4</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="rating"
-                id="rating5"
-                value="5"
-              />
-              <label class="form-check-label" for="rating5">- 5</label>
-            </div>
-
-            <br />
-          </div>
-          <hr />
-
-          <div class="form-group m-2 p-2">
-            <label for="id_description">Commentaire : </label><br />
-            <textarea
-              class="form-control"
-              name="description"
-              maxlength="2048"
-              id="id_description"
-              placeholder="Explicitez votre critique..."
-            ></textarea>
-            <br />
-          </div>
-          <hr />
+          {% csrf_token %}{{ form.as_p }}
           <div class="text-center">
             <button class="btn btn-outline-danger" type="submit">
               <a

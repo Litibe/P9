@@ -1,15 +1,5 @@
-{% extends '_base.html' %} {% load static %}
-<!-- Page Home-->
+{% extends '_base.html' %} {% load static %} {% block main_content %}
 
-{% block main_content %}
-<style>
-  body {
-    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-</style>
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle bg-light">
   <div class="row">
     <div class="text-center">
@@ -28,10 +18,10 @@
           votre ticket ? {% endif %}
         </h2>
         <div class="p-4">
-          {% if review %}
-          {% include "review/partials/_flux_review_with_ticket.html" %}
-          {% else %}
-          {% include "review/partials/_flux_ticket_only.html" %}
+          {% if review %} 
+            {% include "review/partials/_post_review_with_ticket.html" %} 
+          {% else %} 
+            {% include "review/partials/_post_ticket_only.html" %} 
           {% endif %}
         </div>
         <div class="m-auto p-3">

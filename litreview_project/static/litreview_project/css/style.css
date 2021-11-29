@@ -41,4 +41,15 @@
   transition: all 300ms;
   border: solid 2px #e2a063 ;
   background-color: #ffffff;
+  
+}
+
+#id_rating{
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+}
+
+#id_rating li{
+  margin: 10px;
 }

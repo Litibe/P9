@@ -1,15 +1,4 @@
-{% extends '_base.html' %} {% load static %}
-<!-- Page Home-->
-
-{% block main_content %}
-<style>
-  body {
-    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-</style>
+{% extends '_base.html' %} {% load static %} {% block main_content %}
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle bg-light">
   <div class="row">
     <div class="text-center">
@@ -26,7 +15,7 @@
           Etes-vous sûr de vouloir supprimer votre critique ?
         </h2>
         <div class="p-4">
-          {% include "review/partials/_flux_review_with_ticket.html" %}
+          {% include "review/partials/_post_review_with_ticket.html" %}
         </div>
         <div class="m-auto p-3">
           {% if form.errors %} {{ form.errors }} {% endif %}

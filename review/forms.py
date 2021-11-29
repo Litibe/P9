@@ -37,9 +37,10 @@ class ReviewForm(forms.ModelForm):
 
     headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(
         {"class": "form-control", "placeholder": "Mettez le titre de votre critique"}))
-
-    rating = forms.CharField(label="Votre note", widget=forms.NumberInput(
-        {"class": "form-check", "min": "0", "max": "5", "step": "1"}))
+    RATING_CHOICES = [(0, "-0"), (1, '- 1'), (2, '-2'),
+                      (3, '-3'), (4, '-4'), (5, '-5')]
+    rating = forms.ChoiceField(
+        choices=RATING_CHOICES, widget=forms.RadioSelect, label="Votre note")
     body = forms.CharField(label="Votre critique", widget=forms.Textarea(
         {"class": "form-control", "placeholder": "Mettez le détails de votre critique"}))
 

@@ -1,15 +1,5 @@
 {% extends '_base.html' %} {% load static %}
-<!-- Page Home-->
-
 {% block main_content %}
-<style>
-  body {
-    background-image: url("{% static 'review/img/typewriter-801921_1920.jpg' %}");
-    background-attachment: fixed;
-    background-repeat: no-repeat;
-    background-size: cover;
-  }
-</style>
 <div class="container col-12 col-md-9 col-lg-6 p-2 borderTitle bg-light">
   <div class="row">
     <div class="text-center">
@@ -27,7 +17,7 @@
         <div class="p-4">
           <p>
             Vous êtes en train de poster en réponse à </p>
-            {% include "review/partials/_flux_ticket_only.html" %}
+            {% include "review/partials/_post_ticket_only.html" %}
           </p>
         </div>
 
