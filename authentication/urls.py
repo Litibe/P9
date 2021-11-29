@@ -21,10 +21,10 @@ app_name = 'authentication'
 urlpatterns = [
     path('', LoginView.as_view(template_name='authentication/connexion.html',
          redirect_authenticated_user=True), name='connexion'),
-    path('password_modif/', PasswordChangeView
-         .as_view(template_name='authentication/password_modif.html'), name='password_modif'),
-    path('password_modif_success/', PasswordChangeDoneView.as_view(
-        template_name='authentication/password_modif_success.html'), name='password_modif_success'),
+    path('password_change/', PasswordChangeView.as_view(
+        template_name='authentication/password_change.html', success_url='done/'), name='password_change'),
+    path('password_change/done/', views.password_changed,
+         name='password_change_done'),
     path("inscription/", views.inscription, name="inscription"),
     path("user_picture/", views.user_picture, name="user_picture"),
     path('deconnexion/', views.deconnexion, name="deconnexion"),

@@ -51,3 +51,7 @@ def user_picture(request):
             form.save()
             return redirect('review:flux')
     return render(request, 'authentication/user_picture.html', context={'form': form})
+
+
+def password_changed(request):
+    return render(request, 'authentication/password_change_done.html',)
