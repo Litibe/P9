@@ -93,3 +93,13 @@ Quit the server with CONTROL-C.
 Vous pouvez lancer votre navigateur web avec le lien [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
 
 ---
+
+## Utilisation du programme :
+
+Différents utilisateurs ont été construit pour la "démonstration" de LITReview.
+Voici la liste des Idenfiants, ayant tous le mot de passe : litreview :
+lionel
+jean8597
+jean_5679
+sarahj
+severine123

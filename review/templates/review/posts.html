@@ -53,6 +53,7 @@
               {% include "review/partials/_post_review_with_ticket.html" %}
             {% endif %}
           {% endfor %} 
+          {% include "review/partials/_post_ticket_with_review.html" %} 
         {% else %}
           {% if ticket.user_id == request.user.id %} 
             {% include "review/partials/_post_ticket_without_review.html" %} 
