@@ -1,6 +1,5 @@
 from django import forms
 
-from django.db import models
 from . import models as models_review
 
 
@@ -35,14 +34,20 @@ class ModifPicture(forms.ModelForm):
 
 class ReviewForm(forms.ModelForm):
 
-    headline = forms.CharField(label="Titre de la critique", widget=forms.TextInput(
-        {"class": "form-control", "placeholder": "Mettez le titre de votre critique"}))
+    headline = forms.CharField(label="Titre de la critique",
+                               widget=forms.TextInput(
+                                {"class": "form-control",
+                                 "placeholder": "Mettez le titre de votre "
+                                                "critique"}
+                               )
+                               )
     RATING_CHOICES = [(0, "-0"), (1, '- 1'), (2, '-2'),
                       (3, '-3'), (4, '-4'), (5, '-5')]
     rating = forms.ChoiceField(
         choices=RATING_CHOICES, widget=forms.RadioSelect, label="Votre note")
     body = forms.CharField(label="Votre critique", widget=forms.Textarea(
-        {"class": "form-control", "placeholder": "Mettez le détails de votre critique"}))
+        {"class": "form-control",
+         "placeholder": "Mettez le détails de votre critique"}))
 
     class Meta:
         model = models_review.Review

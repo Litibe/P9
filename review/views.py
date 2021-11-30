@@ -1,9 +1,6 @@
-import os
-
 from django.shortcuts import get_object_or_404, render, redirect
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
-from django.conf import settings
+
 
 from . import forms, models
 from authentication import models as auth_models
@@ -78,15 +75,20 @@ def follow(request):
         user=request.user.id)
     request_user_followed_by_other = models.UserFollows.objects.filter(
         followed_user=request.user.id)
-    context = {"user_form": user_form, "remove_user_followed_form": remove_user_followed_form, "all_users_to_be_followed": all_users_to_be_followed,
-               "user_followed_by_request_user": user_followed_by_request_user, "request_user_followed_by_other": request_user_followed_by_other}
+    context = {"user_form": user_form,
+               "remove_user_followed_form": remove_user_followed_form,
+               "all_users_to_be_followed": all_users_to_be_followed,
+               "user_followed_by_request_user": user_followed_by_request_user,
+               "request_user_followed_by_other": request_user_followed_by_other
+               }
 
     if request.method == 'POST':
         user_form = forms.UserFollowsForm(request.POST)
         remove_user_followed_form = forms.UserRemoveFollowsForm(request.POST)
         if user_form.is_valid():
             follow = models.UserFollows.objects.filter(
-                user_id=request.user.id, followed_user=request.POST.get("user")[0])
+                user_id=request.user.id,
+                followed_user=request.POST.get("user")[0])
             if not follow:
                 follow = models.UserFollows.objects.create()
                 follow.user_id = request.user.id
@@ -95,7 +97,8 @@ def follow(request):
 
         if request.POST.get("user_followed_to_delete"):
             followed = models.UserFollows.objects.filter(
-                user_id=request.user.id, followed_user=request.POST.get("user_followed_to_delete")[0])
+                user_id=request.user.id,
+                followed_user=request.POST.get("user_followed_to_delete")[0])
             followed.delete()
         return redirect("review:follow")
     return render(request, 'review/follow.html', context)
@@ -113,7 +116,8 @@ def flux(request):
     reviews_link_tickets = models.Review.objects.filter(
         user_id__in=all_followed).values_list('ticket_id', flat=True)
     tickets = models.Ticket.objects.filter(
-        user_id__in=all_followed) | models.Ticket.objects.filter(id__in=reviews_link_tickets)
+        user_id__in=all_followed) | models.Ticket.objects.filter(
+        id__in=reviews_link_tickets)
     tickets = tickets.order_by("-id")
     context = {"tickets": tickets, "reviews": reviews,
                "reviews_link_tickets": reviews_link_tickets}
@@ -127,7 +131,8 @@ def posts(request):
     reviews_link_tickets = models.Review.objects.filter(
         user_id=request.user.id).values_list('ticket_id', flat=True)
     tickets = models.Ticket.objects.filter(
-        user_id=request.user.id) | models.Ticket.objects.filter(id__in=reviews_link_tickets)
+        user_id=request.user.id) | models.Ticket.objects.filter(
+        id__in=reviews_link_tickets)
     tickets = tickets.order_by("-id")
     context = {"tickets": tickets, "reviews": reviews,
                "reviews_link_tickets": reviews_link_tickets}
@@ -217,7 +222,6 @@ def modify_review(request, number_review):
             context["ticket"] = ticket
         if reviews:
             context["reviews"] = reviews
-
     return render(request, 'review/modify_review.html', context)
 
 

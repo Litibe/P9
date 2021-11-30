@@ -21,12 +21,16 @@ from . import views
 app_name = 'review'
 urlpatterns = [
     path('home/', views.flux, name='home'),
-    path('create_new_review/', views.create_new_review, name='create_new_review'),
-    path('create_new_ticket/', views.create_new_ticket, name='create_new_ticket'),
+    path('create_new_review/', views.create_new_review,
+         name='create_new_review'),
+    path('create_new_ticket/', views.create_new_ticket,
+         name='create_new_ticket'),
     path('create_new_review_for_ticket/<int:number_ticket>/',
-         views.create_new_review_for_ticket, name='create_new_review_for_ticket'),
+         views.create_new_review_for_ticket,
+         name='create_new_review_for_ticket'),
     path('create_new_ticket_and_review/',
-         views.create_new_ticket_and_review, name='create_new_ticket_and_review'),
+         views.create_new_ticket_and_review,
+         name='create_new_ticket_and_review'),
 
     path('delete_ticket/<int:number_ticket>/',
          views.delete_ticket, name='delete_ticket'),

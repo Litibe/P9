@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from . import users_form
 
@@ -27,7 +26,8 @@ def connexion(request):
             else:
                 message = 'Identifiants invalides !'
                 color = "text-danger"
-    return render(request, 'authentication/connexion.html', context={"form": form, "message": message, "color": color})
+    context = {"form": form, "message": message, "color": color}
+    return render(request, 'authentication/connexion.html', context)
 
 
 def inscription(request):
@@ -38,7 +38,8 @@ def inscription(request):
             user = form.save()
             login(request, user)
             return redirect("review:home")
-    return render(request, 'authentication/inscription.html', context={'form': form})
+    context = {'form': form}
+    return render(request, 'authentication/inscription.html', context)
 
 
 @login_required
@@ -50,7 +51,8 @@ def user_picture(request):
         if form.is_valid():
             form.save()
             return redirect('review:flux')
-    return render(request, 'authentication/user_picture.html', context={'form': form})
+    context = {'form': form}
+    return render(request, 'authentication/user_picture.html', context)
 
 
 def password_changed(request):

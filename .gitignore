@@ -154,3 +154,10 @@ cython_debug/
 .DS_Store
 
 media/
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/P9.iml
+.idea/vcs.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
