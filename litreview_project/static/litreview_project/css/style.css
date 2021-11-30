@@ -10,7 +10,7 @@
   border-bottom: #e2a063 solid 4px;
 }
 #divNavBar{
-  top: -2; /* Stay on top */
+  top: -2px; /* Stay on top */
   width: 100%; /* Full width */
   transition: top 0.3s ease-in-out; /* Transition effect when sliding down (and up) */
 }
