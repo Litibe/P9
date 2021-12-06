@@ -23,7 +23,7 @@ Un espace d'inscription, de connexion est obtenu en page d'accueil, l'accès aux
 ## Clonage du Repository :
 
 ```shell
-git clone https://github.com/Litibe/OCR_P9.git
+git clone https://github.com/Litibe/P9.git
 ```
 
 ---
@@ -50,10 +50,10 @@ source [nom_de_votre_environnement_virtuel]/bin/activate
 source .\[nom_de_votre_environnement_virtuel]\Scripts\activate
 ```
 
-Aller dans le dossier OCR_P9 contenant les fichiers
+Aller dans le dossier P9 contenant les fichiers
 
 ```shell
-cd OCR_P9
+cd P9
 ```
 
 ---
