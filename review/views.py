@@ -153,16 +153,17 @@ def modify_ticket(request, number_ticket):
         if request.method == 'POST':
             form = forms.ModifTicketTitleDescription(
                 request.POST)
-            tickets.title = request.POST.get("title", "")
-            tickets.description = request.POST.get("description", "")
-            tickets.save()
-
-            picture = forms.ModifPicture(request.POST, request.FILES)
-            if all([picture.is_valid()]):
-                new_picture = picture.save(commit=False)
-                tickets.image = new_picture.image
+            if form.is_valid():
+                tickets.title = form.cleaned_data["title"]
+                tickets.description = form.cleaned_data["description"]
                 tickets.save()
-            return redirect('review:posts')
+
+                picture = forms.ModifPicture(request.POST, request.FILES)
+                if all([picture.is_valid()]):
+                    new_picture = picture.save(commit=False)
+                    tickets.image = new_picture.image
+                    tickets.save()
+                return redirect('review:posts')
 
     return render(request, 'review/modify_ticket.html', context)
 
