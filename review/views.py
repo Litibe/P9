@@ -184,19 +184,18 @@ def delete_ticket(request, number_ticket):
     ticket = get_object_or_404(models.Ticket, id=number_ticket)
     if ticket:
         context["ticket"] = ticket
-    review = get_object_or_404(models.Review, ticket_id=number_ticket)
+    review = models.Review.objects.filter(ticket_id=number_ticket)
     if review:
         context["review"] = review
 
     if request.method == 'POST':
         ticket = get_object_or_404(
             models.Ticket, id=number_ticket)
-        review = get_object_or_404(models.Review, ticket_id=number_ticket)
+        review = models.Review.objects.filter(ticket_id=number_ticket)
+        if review:
+            review.delete()
         if ticket:
             ticket.delete()
-        if review:
-
-            review.delete()
         return redirect("review:posts")
     return render(request, 'review/delete_ticket.html', context)
 

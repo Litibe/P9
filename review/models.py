@@ -6,13 +6,11 @@ from PIL import Image
 
 
 class Ticket(models.Model):
-    title = models.CharField(max_length=128, null=True,
-                             blank=True, verbose_name="Titre du Ticket")
-    description = models.TextField(max_length=2048, blank=True, null=True)
+    title = models.CharField(max_length=128, verbose_name="Titre du Ticket")
+    description = models.TextField(max_length=2048, blank=True)
     user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        blank=True, null=True)
-    image = models.ImageField(null=True)
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    image = models.ImageField(null=True, blank=True)
     time_created = models.DateTimeField(
         default=timezone.now)
 
@@ -25,23 +23,22 @@ class Ticket(models.Model):
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.resize_image()
+        if self.image:
+            self.resize_image()
 
 
 class Review(models.Model):
     ticket = models.ForeignKey(Ticket, on_delete=models.CASCADE)
     rating = models.PositiveSmallIntegerField(
-        # validates that rating must be between 0 and 5
         validators=[MinValueValidator(0), MaxValueValidator(5)],
         verbose_name="Note", help_text="Note attribuée à la critique")
     headline = models.CharField(
-        max_length=128, blank=True, null=True,
+        max_length=128,
         verbose_name="Titre de Critique")
     body = models.TextField(max_length=8192, blank=True,
-                            null=True,  verbose_name="Commentaire")
+                            verbose_name="Commentaire")
     user = models.ForeignKey(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        blank=True, null=True)
+        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     time_created = models.DateTimeField(
         default=timezone.now)
 
@@ -49,10 +46,10 @@ class Review(models.Model):
 class UserFollows(models.Model):
     user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name="following", null=True,)
+        related_name="following")
     followed_user = models.ForeignKey(
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE,
-        related_name="followed_by", null=True,)
+        related_name="followed_by")
 
     class Meta:
         # ensures we don't get multiple UserFollows instances

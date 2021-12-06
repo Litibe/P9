@@ -104,7 +104,6 @@ Voici la liste des Idenfiants, ayant tous le mot de passe : litreview :
 <li>sarahj</li>
 <li>severine123</li>
 </ul>
-Possibilité de voir le serveur Django de test pour soutenance à l'adresse [http://193.26.22.227](http://193.26.22.227)
 
 ---
 
