@@ -215,7 +215,7 @@ def modify_review(request, number_review):
             form = forms.ReviewForm(
                 request.POST, instance=reviews)
             if form.is_valid():
-                review = form.save()
+                form.save()
                 return redirect('review:flux')
         context["form"] = form
         if ticket:

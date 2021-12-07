@@ -11,6 +11,11 @@
 Cette application permet de demander ou publier des critiques de livres ou d’articles littéraire sous forme de site internet collaboratif.<br/>
 Un espace d'inscription, de connexion est obtenu en page d'accueil, l'accès aux demande de critique (Ticket) et la réalisation d'un critique littéraire (Review) n'est accessible qu'une fois connecté avec son compte.
 
+Cette application permet de demander ou publier des critiques de livres ou d’articles.
+L’application présente deux cas d’utilisation principaux :
+Les personnes qui demandent des critiques sur un livre ou sur un article particulier ;
+Les personnes qui recherchent des articles et des livres intéressants à lire, en se basant sur les critiques des autres.
+
 ---
 
 ## Prérequis :
