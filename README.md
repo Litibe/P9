@@ -121,3 +121,16 @@ Le site web d'application permet :
 <li> D'accéder à la page POSTS : gérer de ses demandes et de ses critiques, possibilités de créer/modifier/supprimer ses tickets, et/ou critiques. Gestion de son mot de passe de connexion</li>
 <li> D'accéder à la page ABONNEMENTS : suivre de nouveaux utilisateurs, modifier sa liste d'abonnements et voir qui nous suit.</li>
 </ul>
+
+---
+
+## Respect PEP8 :
+
+Après avoir activé l'environnement virtuel, vous pouvez entrez la commande suivante :
+
+```
+flake8 --format=html --htmldir=flake_rapport --config=flake8.ini
+```
+
+Un rapport sous format HTML sera généré dans le dossier "flake_rapport", avec comme argument "max-line-length" défini par défaut à 79 caractères par ligne si non précisé.
+Dans le fichier de configuration "flake8.ini", est exclu le dossier env/, settings.py, manage.py, ainsi que les dossiers migrations générés par Django.
