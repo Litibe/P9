@@ -99,7 +99,7 @@ Vous pouvez lancer votre navigateur web avec le lien [http://127.0.0.1:8000/](ht
 
 ## Connexion au Site web généré par le serveur Django :
 
-Différents utilisateurs ont été construit pour la "démonstration" de LITReview.
+Différents utilisateurs ont été construit pour la "démonstration" de LITReview, ainsi que l'import dans le repository (exceptionnellement) du dossier "média".
 Voici la liste des Idenfiants, ayant tous le mot de passe : litreview :
 
 <ul>
